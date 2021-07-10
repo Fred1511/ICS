@@ -1,0 +1,4 @@
+﻿Le tutoriel utilisé pour créer la base de données est :
+https://docs.microsoft.com/fr-fr/visualstudio/data-tools/create-a-sql-database-by-using-a-designer?view=vs-2019
+
+La "ConnectionString" est directement issue de la page "propriétés" de la BDD mdf dans la fenêtre "Explorateur de serveurs".

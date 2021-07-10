@@ -1,0 +1,14 @@
+- créer un chantier en créant une tâche
+- garder l'historique de 1 an maximum
+- permettre de supprimer un employé
+FAIT - griser les jours fériés
+FAIT - permettre d'ajouter/ supprimer des jours fériés
+FAIT - permettre de dupliquer une tâche chez un autre employé
+FAIT - prévoir le champs "confirmé" pour un chantier et faire apparaitre ??? sur le nom du chantier
+FAIT - un chantier clos doit apparaitre hachuré
+FAIT - limiter le nombre de couleurs
+FAIT - les couleurs sont associées aux chantiers et pas aux tâches 
+FAIT - permettre de clore un chantier
+FAIT - Quand on crée un chantier depuis l'interface de configuration, le n° de devis et l'adresse ne sont pas sauvegardés
+FAIT - Quand on crée un chantier depuis l'interface de configuration, les champs vide contiennent "TextBox"
+FAIT - supprimer samedi / dimanche

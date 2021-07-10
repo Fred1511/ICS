@@ -1,0 +1,3 @@
+﻿- Sauvegarde et chargement données depuis le disque
+- Administration - Pouvoir ajouter / renommer / supprimer un employé
+- Quand la souris passe sur une tâche, afficher les indications de base

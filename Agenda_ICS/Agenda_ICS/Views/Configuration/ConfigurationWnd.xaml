@@ -1,0 +1,25 @@
+﻿<Window x:Class="Agenda_ICS.Views.Configuration.ConfigurationWnd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Agenda_ICS.Views.Configuration"
+        mc:Ignorable="d"
+        Title="ConfigurationWnd" Height="500" Width="800" Loaded="Window_Loaded">
+    <Grid Background="WhiteSmoke">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" VerticalAlignment="Top">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0">
+                    <Button Uid="0" Width ="150" Content="CHANTIERS" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Click="OnButtonClick" />
+                    <Button Uid="1" Width ="150" Content="EMPLOYES" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Click="OnButtonClick" />
+                </StackPanel>
+                <Grid x:Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" Margin="10 0"/>
+            </StackPanel>
+        </Grid>
+        <ContentControl Grid.Row="1" Name="PageContent"></ContentControl>
+    </Grid>
+</Window>

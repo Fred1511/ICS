@@ -1,0 +1,53 @@
+﻿<Window x:Class="Agenda_ICS.Views.Editors.ChantierEditorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Agenda_ICS.Views.Editors"
+        mc:Ignorable="d"
+        Closing="Window_Closing" Loaded="Window_Loaded" Background="Beige"
+        Title="Modification d'un Chantier" Height="300" Width="550">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <!--Ligne 1-->
+        <Label Content="Nom :" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="NomChantier" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,3,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="354"/>
+
+        <!--Ligne 2-->
+        <Label Content="Référence devis :" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="RefDevis" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,3,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="354"/>
+
+        <!--Ligne 3-->
+        <Label Content="Adresse :" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="Adresse" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,3,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="354"/>
+
+        <!--Ligne 4-->
+        <Label Content="Couleur :" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Top"/>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <Button Name="Couleur_0" Uid="0" Margin="10, 0, 0, 0" Width="50" Background="LightGreen" Click="OnClickModifyColor" Height="24" />
+            <Button Name="Couleur_1" Uid="1" Margin="5, 0, 0, 0" Width="50" Background="LightPink" Click="OnClickModifyColor" Height="24" />
+            <Button Name="Couleur_2" Uid="2" Margin="5, 0, 0, 0" Width="50" Background="Coral" Click="OnClickModifyColor" Height="24" />
+            <Button Name="Couleur_3" Uid="3" Margin="5, 0, 0, 0" Width="50" Background="Yellow" Click="OnClickModifyColor" Height="24" />
+            <Button Name="Couleur_4" Uid="4" Margin="5, 0, 0, 0" Width="50" Background="LightGray" Click="OnClickModifyColor" Height="24" />
+            <Button Name="Couleur_5" Uid="5" Margin="5, 0, 0, 0" Width="50" Background="BurlyWood" Click="OnClickModifyColor" Height="24" />
+        </StackPanel>
+
+        <!--Ligne 5-->
+        <Label Content="Statut :" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Margin="10,2,0,0" Height="30" VerticalAlignment="Center"/>
+        <ListBox Name="ListOfStatutListbox" Grid.Row="4" Grid.Column="1" Margin="10,5,10,5" Width="100" HorizontalAlignment="Left" />
+
+        <!--Ligne 6-->
+        <Button Content="Valider" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="19,26,0,0" VerticalAlignment="Top" Width="75" Click="OnClick_Valider" RenderTransformOrigin="0.493,1"/>
+    </Grid>
+</Window>
