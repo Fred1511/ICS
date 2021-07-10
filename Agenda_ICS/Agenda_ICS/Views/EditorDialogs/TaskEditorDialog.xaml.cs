@@ -290,17 +290,22 @@ namespace Agenda_ICS.Views
         {
             var filter = Filter.Text.ToLower();
 
+            var nbMatch = 0;
+            var idMatch = -1;
             for(var i = 0; i < Chantier.Items.Count; i++)
             {
                 var chantier = Chantier.Items[i].ToString().ToLower();
                 if (chantier.Contains(filter))
                 {
-                    Chantier.SelectedIndex = i;
-                    break;
+                    idMatch = i;
+                    nbMatch++;
                 }
             }
 
-            Chantier.SelectedIndex = -1;
+            if (0 == nbMatch || nbMatch > 1)
+                Chantier.SelectedIndex = -1;
+            else
+                Chantier.SelectedIndex = idMatch;
         }
     }
 }
