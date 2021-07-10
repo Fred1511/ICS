@@ -74,5 +74,27 @@ namespace Agenda_ICS.Views.Configuration.Pages
             _editDialog = new ChantierEditorDialog(this);
             _editDialog.ShowDialog();
         }
+
+        private void OnFilterChantierChanged(object sender, TextChangedEventArgs e)
+        {
+            var filter = Filter.Text.ToLower();
+
+            var nbMatch = 0;
+            var idMatch = -1;
+            for (var i = 0; i < ListOfChantiers.Items.Count; i++)
+            {
+                var chantier = ListOfChantiers.Items[i].ToString().ToLower();
+                if (chantier.Contains(filter))
+                {
+                    idMatch = i;
+                    nbMatch++;
+                }
+            }
+
+            if (0 == nbMatch || nbMatch > 1)
+                ListOfChantiers.SelectedIndex = -1;
+            else
+                ListOfChantiers.SelectedIndex = idMatch;
+        }
     }
 }
