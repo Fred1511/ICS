@@ -1,6 +1,7 @@
 ﻿using Agenda_ICS.Views.Calendar;
 using Agenda_ICS.Views.Editors;
 using NDatasModel;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -23,16 +24,16 @@ namespace Agenda_ICS.Views.Configuration.Pages
 
         private void UpdateListOfChantiers(long selectedChantierKeyId = -1)
         {
-            ListOfChantiers.Items.Clear();
-            var listOfChantiers = Model.Instance.GetChantiers();
+            Chantier.Items.Clear();
+            _chantiers = Model.Instance.GetChantiers();
             var index = 0;
-            foreach (var chantier in listOfChantiers)
+            foreach (var chantier in _chantiers)
             {
-                ListOfChantiers.Items.Add(chantier);
+                Chantier.Items.Add(chantier);
 
                 if (chantier.KeyId == selectedChantierKeyId)
                 {
-                    ListOfChantiers.SelectedIndex = index;
+                    Chantier.SelectedIndex = index;
                 }
 
                 index++;
@@ -52,6 +53,8 @@ namespace Agenda_ICS.Views.Configuration.Pages
 
         ChantierEditorDialog _editDialog;
 
+        private IChantier[] _chantiers;
+
         private void OnClick_RemoveChantier(object sender, RoutedEventArgs e)
         {
 
@@ -59,7 +62,7 @@ namespace Agenda_ICS.Views.Configuration.Pages
 
         private void OnClick_ModifyChantier(object sender, RoutedEventArgs e)
         {
-            var selectedChantier = (IChantier)ListOfChantiers.SelectedItem;
+            var selectedChantier = (IChantier)Chantier.SelectedItem;
             if (null == selectedChantier)
             {
                 MessageBox.Show("Veuillez sélectionner un chantier à modifier", "Impossible", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -77,24 +80,36 @@ namespace Agenda_ICS.Views.Configuration.Pages
 
         private void OnFilterChantierChanged(object sender, TextChangedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(Filter.Text))
+            {
+                Chantier.Items.Clear();
+                for (var i = 0; i < _chantiers.Length; i++)
+                {
+                    Chantier.Items.Add(_chantiers[i]);
+                }
+                Chantier.SelectedIndex = -1;
+                return;
+            }
+
             var filter = Filter.Text.ToLower();
 
-            var nbMatch = 0;
-            var idMatch = -1;
-            for (var i = 0; i < ListOfChantiers.Items.Count; i++)
+            var filteredChantiers = new List<IChantier>();
+            for (var i = 0; i < _chantiers.Length; i++)
             {
-                var chantier = ListOfChantiers.Items[i].ToString().ToLower();
+                var chantier = _chantiers[i].ToString().ToLower();
                 if (chantier.Contains(filter))
                 {
-                    idMatch = i;
-                    nbMatch++;
+                    filteredChantiers.Add(_chantiers[i]);
                 }
             }
 
-            if (0 == nbMatch || nbMatch > 1)
-                ListOfChantiers.SelectedIndex = -1;
-            else
-                ListOfChantiers.SelectedIndex = idMatch;
+            Chantier.Items.Clear();
+            for (var i = 0; i < filteredChantiers.Count; i++)
+            {
+                Chantier.Items.Add(filteredChantiers[i]);
+            }
+
+            Chantier.SelectedIndex = (filteredChantiers.Count == 1) ? 0 : -1;
         }
     }
 }

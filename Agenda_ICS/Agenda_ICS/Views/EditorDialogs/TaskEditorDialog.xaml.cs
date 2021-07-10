@@ -1,6 +1,7 @@
 ﻿using Agenda_ICS.Views.Calendar;
 using NDatasModel;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
@@ -47,6 +48,8 @@ namespace Agenda_ICS.Views
 
         // *** RESTRICTED ***********************
 
+        private IChantier[] _chantiers;
+
         private EMode _mode;
 
         private IDialogWndOwner _owner;
@@ -75,13 +78,17 @@ namespace Agenda_ICS.Views
             }
 
             index = 0;
-            var chantiers = Model.Instance.GetChantiers();
-            foreach (var chantier in chantiers)
+            _chantiers = Model.Instance.GetChantiers();
+            foreach (var chantier in _chantiers)
             {
                 Chantier.Items.Add(chantier);
                 if (chantier.KeyId == _taskcopy._chantierKeyId)
                 {
                     Chantier.SelectedIndex = index;
+                    if (index != -1)
+                    {
+                        Chantier.ScrollIntoView(Chantier.SelectedItem);
+                    }
                 }
 
                 index++;
@@ -288,24 +295,36 @@ namespace Agenda_ICS.Views
 
         private void OnFilterChantierChanged(object sender, TextChangedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(Filter.Text))
+            {
+                Chantier.Items.Clear();
+                for (var i = 0; i < _chantiers.Length; i++)
+                {
+                    Chantier.Items.Add(_chantiers[i]);
+                }
+                Chantier.SelectedIndex = -1;
+                return;
+            }
+
             var filter = Filter.Text.ToLower();
 
-            var nbMatch = 0;
-            var idMatch = -1;
-            for(var i = 0; i < Chantier.Items.Count; i++)
+            var filteredChantiers = new List<IChantier>();
+            for(var i = 0; i < _chantiers.Length; i++)
             {
-                var chantier = Chantier.Items[i].ToString().ToLower();
+                var chantier = _chantiers[i].ToString().ToLower();
                 if (chantier.Contains(filter))
                 {
-                    idMatch = i;
-                    nbMatch++;
+                    filteredChantiers.Add(_chantiers[i]);
                 }
             }
 
-            if (0 == nbMatch || nbMatch > 1)
-                Chantier.SelectedIndex = -1;
-            else
-                Chantier.SelectedIndex = idMatch;
+            Chantier.Items.Clear();
+            for(var i = 0; i < filteredChantiers.Count; i++)
+            {
+                Chantier.Items.Add(filteredChantiers[i]);
+            }
+
+            Chantier.SelectedIndex = (filteredChantiers.Count == 1) ? 0 : -1;
         }
     }
 }

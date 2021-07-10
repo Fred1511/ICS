@@ -32,7 +32,7 @@
                 <Label Content="Filtre :" HorizontalAlignment="Left" Height="25"  Width="45" Margin="10,14,0,0" />
                 <TextBox Name="Filter" HorizontalAlignment="Left" Height="25"  Width="218" Margin="0,14,0,0" TextChanged="OnFilterChantierChanged" />
             </StackPanel>
-            <ListBox Name="Chantier" HorizontalAlignment="Left" Height="115" Width="475" Margin="10,14,0,15" 
+            <ListBox Name="Chantier" HorizontalAlignment="Left" Height="115" Width="475" Margin="10,5,0,15" 
                     VerticalContentAlignment="Center" KeyDown="OnKeyDown"/>
         </StackPanel>
         <TextBox Name="DayOfBeginningOfTask" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Début de la tâche" 
