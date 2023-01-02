@@ -8,9 +8,16 @@
              d:DesignHeight="400" d:DesignWidth="800">
     <Grid>
         <Label Content="Liste des chantiers :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
-        <Label Content="Filtre :" HorizontalAlignment="Left"  Width="45" Margin="10,44,0,333" RenderTransformOrigin="0.536,-2.49" />
-        <TextBox Name="Filter" HorizontalAlignment="Left"  Width="253" Margin="55,44,0,333" TextChanged="OnFilterChantierChanged" RenderTransformOrigin="0.474,-4.499" />
+        <Label Content="Contient :" HorizontalAlignment="Left"  Width="64" Margin="10,44,0,333" RenderTransformOrigin="0.536,-2.49" />
+        <TextBox Name="Filter" HorizontalAlignment="Left"  Width="229" Margin="79,44,0,333" TextChanged="OnFilterChantierChanged" RenderTransformOrigin="0.474,-4.499" />
         <ListBox Name="Chantier" HorizontalAlignment="Left" Height="219" Margin="10,72,0,0" VerticalAlignment="Top" Width="551"/>
+        <StackPanel Name="Filtrage" Orientation="Vertical" Margin="580,73,50,111" RenderTransformOrigin="0.5,0.5">
+            <Label Content="Filtres" HorizontalAlignment="Center" FontWeight="Bold" />
+            <RadioButton Name="Filtre_Tous_radioBtn" Content="Tous" Margin="5" IsChecked="True" Click="FiltreRadioBtn_Click" />
+            <RadioButton Name="Filtre_Planifiés_radioBtn" Content="Planifiés" Margin="5" Click="FiltreRadioBtn_Click"/>
+            <RadioButton Name="Filtre_Facturés_radioBtn" Content="Facturés" Margin="5" Click="FiltreRadioBtn_Click"/>
+            <RadioButton Name="Filtre_A_Planifier_radioBtn" Content="A planifier" Margin="5" Click="FiltreRadioBtn_Click"/>
+        </StackPanel>
         <Button Content="Supprimer" HorizontalAlignment="Left" Margin="473,303,0,0" VerticalAlignment="Top" Width="88" 
                 Click="OnClick_RemoveChantier" Background="#FFE0E0E0" Foreground="#FFA89E9E" FontWeight="Bold" Height="23" IsEnabled="False"/>
         <Button Content="Modifier" HorizontalAlignment="Left" Margin="10,303,0,0" VerticalAlignment="Top" Width="141" Height="23" 

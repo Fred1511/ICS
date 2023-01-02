@@ -47,6 +47,8 @@ namespace NDatasModel
 
         ITask GetTask(long keyId);
 
+        ITask[] GetTasks();
+
         long AddTaskToEmployee(long employeeKeyId, long chantierKeyId, DateTime beginsAt, DateTime endsAt);
 
         ITask ModifyTask(CTask taskModified);

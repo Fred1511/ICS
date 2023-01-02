@@ -2,6 +2,7 @@
 using Agenda_ICS.Views.Editors;
 using NDatasModel;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,10 +13,33 @@ namespace Agenda_ICS.Views.Configuration.Pages
     /// </summary>
     public partial class ChantiersConfig : UserControl, IDialogWndOwner
     {
+        // *** PUBLIC ****************************
+
+        public enum EFiltre
+        {
+            TOUS,
+            PLANIFIéS,
+            FACTURéS,
+            A_PLANIFIER
+        }
+
         public ChantiersConfig()
         {
             InitializeComponent();
         }
+
+        public void OnCloseDialog(Window wnd)
+        {
+            if (wnd == _editDialog)
+            {
+                var chantier = _editDialog._chantier;
+                UpdateListOfChantiers(chantier.KeyId);
+
+                _editDialog = null;
+            }
+        }
+
+        // *** RESTRICTED ************************
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -25,7 +49,7 @@ namespace Agenda_ICS.Views.Configuration.Pages
         private void UpdateListOfChantiers(long selectedChantierKeyId = -1)
         {
             Chantier.Items.Clear();
-            _chantiers = Model.Instance.GetChantiers();
+            _chantiers = Model.Instance.GetChantiers().OrderBy(x => x.Name).ToArray();
             var index = 0;
             foreach (var chantier in _chantiers)
             {
@@ -37,17 +61,6 @@ namespace Agenda_ICS.Views.Configuration.Pages
                 }
 
                 index++;
-            }
-        }
-
-        public void OnCloseDialog(Window wnd)
-        {
-            if (wnd == _editDialog)
-            {
-                var chantier = _editDialog._chantier;
-                UpdateListOfChantiers(chantier.KeyId);
-
-                _editDialog = null;
             }
         }
 
@@ -80,28 +93,44 @@ namespace Agenda_ICS.Views.Configuration.Pages
 
         private void OnFilterChantierChanged(object sender, TextChangedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(Filter.Text))
-            {
-                Chantier.Items.Clear();
-                for (var i = 0; i < _chantiers.Length; i++)
-                {
-                    Chantier.Items.Add(_chantiers[i]);
-                }
-                Chantier.SelectedIndex = -1;
-                return;
-            }
+            UpdateListOfChantiersDisplayed();
+        }
+
+        private void FiltreRadioBtn_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateListOfChantiersDisplayed();
+        }
+
+        private void UpdateListOfChantiersDisplayed()
+        {
+            var isChantierNameContainsKeyword = false == string.IsNullOrWhiteSpace(Filter.Text);
 
             var filter = Filter.Text.ToLower();
+
+            var tasks = Model.Instance.GetTasks();
 
             var filteredChantiers = new List<IChantier>();
             for (var i = 0; i < _chantiers.Length; i++)
             {
                 var chantier = _chantiers[i].ToString().ToLower();
-                if (chantier.Contains(filter))
+                if (isChantierNameContainsKeyword && false == chantier.Contains(filter))
+                {
+                    continue;
+                }
+
+                var filtre = SelectedFiltre();
+                var isPlanifié = IsChantierPlanifié(_chantiers[i], tasks);
+                if (filtre == EFiltre.TOUS
+                    || (filtre == EFiltre.PLANIFIéS && isPlanifié)
+                    || (filtre == EFiltre.FACTURéS && _chantiers[i].Statut == EStatutChantier.CLOS)
+                    || (filtre == EFiltre.A_PLANIFIER && false == isPlanifié)
+                   )
                 {
                     filteredChantiers.Add(_chantiers[i]);
                 }
             }
+
+            filteredChantiers = filteredChantiers.OrderBy(x => x.Name).ToList();
 
             Chantier.Items.Clear();
             for (var i = 0; i < filteredChantiers.Count; i++)
@@ -110,6 +139,41 @@ namespace Agenda_ICS.Views.Configuration.Pages
             }
 
             Chantier.SelectedIndex = (filteredChantiers.Count == 1) ? 0 : -1;
+        }
+
+        private bool IsChantierPlanifié(IChantier chantier, ITask[] allTasks)
+        {
+            foreach (var task in allTasks)
+            {
+                if (task.ChantierKeyId == chantier.KeyId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private EFiltre SelectedFiltre()
+        {
+            if ((bool)Filtre_Tous_radioBtn.IsChecked)
+            {
+                return EFiltre.TOUS;
+            }
+            if ((bool)Filtre_Planifiés_radioBtn.IsChecked)
+            {
+                return EFiltre.PLANIFIéS;
+            }
+            if ((bool)Filtre_Facturés_radioBtn.IsChecked)
+            {
+                return EFiltre.FACTURéS;
+            }
+            if ((bool)Filtre_A_Planifier_radioBtn.IsChecked)
+            {
+                return EFiltre.A_PLANIFIER;
+            }
+
+            throw new System.Exception();
         }
     }
 }

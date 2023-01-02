@@ -70,6 +70,8 @@ namespace Agenda_ICS
 
         ITask GetTask(long taskKeyId);
 
+        ITask[] GetTasks();
+
         void OnTimer_100ms();
 
         bool IsTestMode { get; }

@@ -248,6 +248,11 @@ namespace Agenda_ICS
             return _db.GetTask(taskKeyId);
         }
 
+        public ITask[] GetTasks()
+        {
+            return _db.GetTasks();
+        }
+
         public void AddJourFérié(DateTime jour)
         {
             _db.AddJourFérié(jour);

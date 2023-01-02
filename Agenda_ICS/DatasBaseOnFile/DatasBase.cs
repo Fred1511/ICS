@@ -235,6 +235,11 @@ namespace NDatasBaseOnFile
             return tasks.Find(x => x.KeyId == keyId);
         }
 
+        public ITask[] GetTasks()
+        {
+            return ReadTasksFromFile();
+        }
+
         public IChantier GetChantier(long chantierKeyId)
         {
             var chantiers = new List<CChantier>(ReadChantiersFromFile());
