@@ -11,13 +11,34 @@ namespace Agenda_ICS
 
         void ModifyEmployee(long employeeKeyId, string employeeName);
 
-        long CreateChantier(string chantierName, string refDevis, string adresse, 
-            int couleurId, EStatutChantier statut);
+        long CreateChantier(
+            string chantierName, 
+            string refDevis, 
+            string adresse, 
+            int couleurId, 
+            EStatutChantier statut,
+            string dateAcceptationDevis,
+            string datePrevisionnelleTravaux,
+            int nbDeTechniciens,
+            int nbDHeuresAPlanifier,
+            float prixDeVenteHT
+            );
 
         void RemoveChantier(long chantierKeyId);
 
-        void ModifyChantier(long chantierKeyId, string chantierName, string refDevis, 
-            string adresse, int couleurId, EStatutChantier statut);
+        void ModifyChantier(
+            long chantierKeyId, 
+            string chantierName, 
+            string refDevis, 
+            string adresse, 
+            int couleurId, 
+            EStatutChantier statut,
+            string dateAcceptationDevis,
+            string datePrevisionnelleTravaux,
+            int nbDeTechniciens,
+            int nbDHeuresAPlanifier,
+            float prixDeVenteHT
+            );
 
         void AddJourFérié(DateTime jour);
 

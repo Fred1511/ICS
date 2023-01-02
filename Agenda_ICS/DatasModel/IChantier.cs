@@ -13,5 +13,15 @@
         int CouleurId { get; }
 
         EStatutChantier Statut { get; }
+
+        string DateAcceptationDevis { get; }
+
+        string DatePrevisionnelleTravaux { get; }
+
+        int NbDeTechniciens { get; }
+
+        int NbDHeuresAPlanifier { get; }
+
+        float PrixDeVenteHT { get; }
     }
 }

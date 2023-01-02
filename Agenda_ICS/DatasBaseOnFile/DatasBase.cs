@@ -16,6 +16,10 @@ namespace NDatasBaseOnFile
         {
             _folderPath = folderPath;
 
+            // A utiliser pour modifier la structure des données chantiers
+            //var chantiers = ReadChantiersFromFile();
+            //WriteChantiersToFile(chantiers);
+
             if (false == File.Exists(PathToEmployeesFile) 
                 || false == File.Exists(PathToChantiersFile)
                 || false == File.Exists(PathToTasksFile)
@@ -70,12 +74,34 @@ namespace NDatasBaseOnFile
             WriteEmployeesToFile(employees.ToArray());
         }
 
-        public long CreateChantier(string chantierName, string refDevis, string adresse,
-            int couleurId, EStatutChantier statut)
+        public long CreateChantier(
+            string chantierName, 
+            string refDevis, 
+            string adresse,
+            int couleurId,
+            EStatutChantier statut,
+            string dateAcceptationDevis,
+            string datePrevisionnelleTravaux,
+            int nbDeTechniciens,
+            int nbDHeuresAPlanifier,
+            float prixDeVenteHT
+            )
         {
             var chantiers = new List<CChantier>(ReadChantiersFromFile());
             var keyId = GetAvailableKeyIdForNewChantier(chantiers.ToArray());
-            var newChantier = new CChantier(keyId, chantierName, refDevis, adresse, couleurId, statut);
+            var newChantier = new CChantier(
+                keyId, 
+                chantierName, 
+                refDevis, 
+                adresse, 
+                couleurId, 
+                statut,
+                dateAcceptationDevis,
+                datePrevisionnelleTravaux,
+                nbDeTechniciens,
+                nbDHeuresAPlanifier,
+                prixDeVenteHT
+                );
             chantiers.Add(newChantier);
 
             WriteChantiersToFile(chantiers.ToArray());
@@ -94,8 +120,19 @@ namespace NDatasBaseOnFile
             WriteChantiersToFile(chantiers.ToArray());
         }
 
-        public void ModifyChantier(long chantierKeyId, string chantierName, string refDevis,
-            string adresse, int couleurId, EStatutChantier statut)
+        public void ModifyChantier(
+            long chantierKeyId, 
+            string chantierName, 
+            string refDevis,
+            string adresse, 
+            int couleurId, 
+            EStatutChantier statut,
+            string dateAcceptationDevis,
+            string datePrevisionnelleTravaux,
+            int nbDeTechniciens,
+            int nbDHeuresAPlanifier,
+            float prixDeVenteHT
+            )
         {
             var chantiers = new List<CChantier>(ReadChantiersFromFile());
             var chantierToModify = chantiers.Find(x => x.KeyId == chantierKeyId);
@@ -110,6 +147,11 @@ namespace NDatasBaseOnFile
             chantierToModify._adresse = adresse;
             chantierToModify._couleurId = couleurId;
             chantierToModify._statut = statut;
+            chantierToModify._dateAcceptationDevis = dateAcceptationDevis;
+            chantierToModify._datePrevisionnelleTravaux = datePrevisionnelleTravaux;
+            chantierToModify._nbDeTechniciens = nbDeTechniciens;
+            chantierToModify._nbDHeuresAPlanifier = nbDHeuresAPlanifier;
+            chantierToModify._prixDeVenteHT = prixDeVenteHT;
 
             WriteChantiersToFile(chantiers.ToArray());
         }
@@ -682,8 +724,25 @@ namespace NDatasBaseOnFile
             var adresse = reader.ReadString();
             var couleurId = reader.ReadInt32();
             var statut = (EStatutChantier)(reader.ReadInt32());
+            var dateAcceptationDevis = reader.ReadString();
+            var datePrevisionnelleTravaux = reader.ReadString();
+            var nbDeTechniciens = reader.ReadInt32();
+            var nbDHeuresAPlanifier = reader.ReadInt32();
+            var prixDeVenteHT = reader.ReadSingle();
 
-            return new CChantier(keyid, name, refDevis, adresse, couleurId, statut);
+            return new CChantier(
+                keyid, 
+                name, 
+                refDevis, 
+                adresse, 
+                couleurId, 
+                statut,
+                dateAcceptationDevis,
+                datePrevisionnelleTravaux,
+                nbDeTechniciens,
+                nbDHeuresAPlanifier,
+                prixDeVenteHT
+                );
         }
 
         private void WriteChantierToFile(BinaryWriter writer, IChantier chantier)
@@ -694,6 +753,11 @@ namespace NDatasBaseOnFile
             writer.Write(chantier.Adresse);
             writer.Write(chantier.CouleurId);
             writer.Write((int)(chantier.Statut));
+            writer.Write(chantier.DateAcceptationDevis);
+            writer.Write(chantier.DatePrevisionnelleTravaux);
+            writer.Write(chantier.NbDeTechniciens);
+            writer.Write(chantier.NbDHeuresAPlanifier);
+            writer.Write(chantier.PrixDeVenteHT);
         }
 
         private CJourFérié ReadJourFériéFromFile(BinaryReader reader)

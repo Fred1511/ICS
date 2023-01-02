@@ -25,6 +25,16 @@ namespace NDatasModel
 
         public EStatutChantier Statut => _statut;
 
+        public string DateAcceptationDevis => _dateAcceptationDevis;
+
+        public string DatePrevisionnelleTravaux => _datePrevisionnelleTravaux;
+
+        public int NbDeTechniciens => _nbDeTechniciens;
+
+        public int NbDHeuresAPlanifier => _nbDHeuresAPlanifier;
+
+        public float PrixDeVenteHT => _prixDeVenteHT;
+
         // *** DATAS ***************************
 
         public long _keyId;
@@ -39,8 +49,29 @@ namespace NDatasModel
 
         public EStatutChantier _statut;
 
-        public CChantier(long keyId, string name, string refDevis, 
-            string adresse, int couleurId, EStatutChantier statut)
+        public string _dateAcceptationDevis;
+
+        public string _datePrevisionnelleTravaux;
+
+        public int _nbDeTechniciens;
+
+        public int _nbDHeuresAPlanifier;
+
+        public float _prixDeVenteHT;
+
+        public CChantier(
+            long keyId, 
+            string name, 
+            string refDevis, 
+            string adresse, 
+            int couleurId, 
+            EStatutChantier statut,
+            string dateAcceptationDevis = "",
+            string datePrevisionnelleTravaux = "",
+            int nbDeTechniciens = 0,
+            int nbDHeuresAPlanifier = 0,
+            float prixDeVenteHT = 0
+            )
         {
             _keyId = keyId;
             _name = name ?? throw new ArgumentNullException(nameof(name));
@@ -48,6 +79,11 @@ namespace NDatasModel
             _adresse = adresse ?? throw new ArgumentNullException(nameof(adresse));
             _couleurId = couleurId;
             _statut = statut;
+            _dateAcceptationDevis = dateAcceptationDevis ?? throw new ArgumentNullException(nameof(dateAcceptationDevis));
+            _datePrevisionnelleTravaux = datePrevisionnelleTravaux ?? throw new ArgumentNullException(nameof(dateAcceptationDevis));
+            _nbDeTechniciens = nbDeTechniciens;
+            _nbDHeuresAPlanifier = nbDHeuresAPlanifier;
+            _prixDeVenteHT = prixDeVenteHT;
         }
 
         public override string ToString()

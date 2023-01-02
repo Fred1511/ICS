@@ -2,17 +2,43 @@
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.Net.Http;
 using System.Speech.Recognition;
 using System.Speech.Synthesis;
+using System.Threading.Tasks;
 
-namespace Console
+namespace NConsole
 {
     class Program
     {
+        static HttpClient client;
+
+        static async Task<string> GetGlobalDataAsync()
+        {
+            var data = string.Empty;
+            var response = await client.GetAsync("https://www.forsim.net/rest/api.html");
+
+            if (response.IsSuccessStatusCode)
+            {
+                data = await response.Content.ReadAsStringAsync();
+            }
+
+            return data;
+        }
+
+        static string ReadDatasFromWeb()
+        {
+            client = new HttpClient();
+            var result = GetGlobalDataAsync().GetAwaiter().GetResult();
+
+            return result;
+        }
+
         static void Main(string[] args)
         {
-            var test = new ReadDatasOnFile();
-            test.Core();
+
+            //var test = new ReadDatasOnFile();
+            //test.Core();
 
             System.Console.WriteLine("Press any key to exit.....");
             System.Console.ReadKey();

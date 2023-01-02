@@ -21,12 +21,18 @@ namespace Agenda_ICS.Views.Editors
 
             InitializeComponent();
 
-            _chantier = new CChantier(chantier.KeyId, 
+            _chantier = new CChantier(
+                chantier.KeyId, 
                 chantier.Name, 
                 chantier.RefDevis,
                 chantier.Adresse,
                 chantier.CouleurId,
-                chantier.Statut
+                chantier.Statut,
+                chantier.DateAcceptationDevis,
+                chantier.DatePrevisionnelleTravaux,
+                chantier.NbDeTechniciens,
+                chantier.NbDHeuresAPlanifier,
+                chantier.PrixDeVenteHT
                 );
             _mode = EMode.MODIFICATION;
         }
@@ -37,7 +43,19 @@ namespace Agenda_ICS.Views.Editors
 
             InitializeComponent();
 
-            _chantier = new CChantier(-1, "Nouveau chantier", string.Empty, string.Empty, 0, EStatutChantier.A_CONFIRMER);
+            _chantier = new CChantier(
+                -1, 
+                "Nouveau chantier", 
+                string.Empty, 
+                string.Empty, 
+                0, 
+                EStatutChantier.A_CONFIRMER,
+                string.Empty,
+                string.Empty,
+                0,
+                0,
+                0
+                );
             _mode = EMode.CREATION;
             this.Title = "Nouveau chantier";
         }
@@ -58,8 +76,13 @@ namespace Agenda_ICS.Views.Editors
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             NomChantier.Text = _chantier.Name;
-            RefDevis.Text = _chantier.RefDevis;
             Adresse.Text = _chantier.Adresse;
+            RefDevis.Text = _chantier.RefDevis;
+            DateAcceptationDevis.Text= _chantier.DateAcceptationDevis;
+            DatePrevisionnelleTravaux.Text = _chantier.DatePrevisionnelleTravaux;
+            NombreTechniciens.Text = _chantier.NbDeTechniciens > 0 ? _chantier.NbDeTechniciens.ToString() : string.Empty;
+            NombreHeuresAPlanifier.Text = _chantier.NbDHeuresAPlanifier > 0 ? _chantier.NbDHeuresAPlanifier.ToString() : string.Empty;
+            PrixDeVenteHT.Text = _chantier.PrixDeVenteHT != 0 ? $"{_chantier.PrixDeVenteHT:0.00}" : string.Empty;
 
             UpdateSelectedColor(_chantier.CouleurId);
 
@@ -126,14 +149,91 @@ namespace Agenda_ICS.Views.Editors
             _chantier._refDevis = RefDevis.Text;
             _chantier._adresse = Adresse.Text;
             _chantier._statut = (EStatutChantier)(ListOfStatutListbox.SelectedIndex);
+            _chantier._dateAcceptationDevis = DateAcceptationDevis.Text;
+            _chantier._datePrevisionnelleTravaux = DatePrevisionnelleTravaux.Text;
+
+            if (false == int.TryParse(NombreTechniciens.Text.Trim(), out int nbDeTechniciens))
+            {
+                if (NombreTechniciens.Text == string.Empty)
+                {
+                    nbDeTechniciens = 0;
+                }
+                else
+                {
+                    MessageBox.Show("Le nombre de techniciens doit être un nombre entier", "Merci de corriger ...", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+            }
+            if (nbDeTechniciens < 0)
+            {
+                MessageBox.Show("Le nombre de techniciens doit être un nombre entier POSITIF", "Merci de corriger ...", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            _chantier._nbDeTechniciens = nbDeTechniciens;
+
+            if (false == int.TryParse(NombreHeuresAPlanifier.Text.Trim(), out int nbDHeuresAPlanifier))
+            {
+                if (NombreHeuresAPlanifier.Text == string.Empty)
+                {
+                    nbDHeuresAPlanifier = 0;
+                }
+                else
+                {
+                    MessageBox.Show("Le nombre d'heures à planifier doit être un nombre entier", "Merci de corriger ...", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+            }
+            if (nbDHeuresAPlanifier < 0)
+            {
+                MessageBox.Show("Le nombre d'heures à planifier doit être un nombre entier POSITIF", "Merci de corriger ...", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            _chantier._nbDHeuresAPlanifier = nbDHeuresAPlanifier;
+
+            if (false == float.TryParse(PrixDeVenteHT.Text.Trim().Replace('.', ','), out float prixDeVenteHT))
+            {
+                if (PrixDeVenteHT.Text == string.Empty)
+                {
+                    prixDeVenteHT = 0;
+                }
+                else
+                {
+                    MessageBox.Show("Le prix de vente HT doit être un nombre", "Merci de corriger ...", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+            }
+            _chantier._prixDeVenteHT = prixDeVenteHT;
 
             if (EMode.MODIFICATION == _mode)
             {
-                Model.Instance.ModifyChantier(_chantier.KeyId, _chantier.Name, _chantier.RefDevis, _chantier.Adresse, _chantier.CouleurId, _chantier.Statut);
+                Model.Instance.ModifyChantier(
+                    _chantier.KeyId, 
+                    _chantier.Name, 
+                    _chantier.RefDevis, 
+                    _chantier.Adresse, 
+                    _chantier.CouleurId, 
+                    _chantier.Statut,
+                    _chantier.DateAcceptationDevis,
+                    _chantier.DatePrevisionnelleTravaux,
+                    _chantier.NbDeTechniciens,
+                    _chantier.NbDHeuresAPlanifier,
+                    _chantier.PrixDeVenteHT
+                    );
             }
             else
             {
-                _chantier._keyId = Model.Instance.CreateChantier(_chantier.Name, _chantier.RefDevis, _chantier.Adresse, _chantier.CouleurId, _chantier.Statut);
+                _chantier._keyId = Model.Instance.CreateChantier(
+                    _chantier.Name, 
+                    _chantier.RefDevis, 
+                    _chantier.Adresse, 
+                    _chantier.CouleurId, 
+                    _chantier.Statut,
+                    _chantier.DateAcceptationDevis,
+                    _chantier.DatePrevisionnelleTravaux,
+                    _chantier.NbDeTechniciens,
+                    _chantier.NbDHeuresAPlanifier,
+                    _chantier.PrixDeVenteHT
+                    );
             }
 
             this.Close();

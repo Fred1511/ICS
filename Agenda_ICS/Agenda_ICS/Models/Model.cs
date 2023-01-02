@@ -44,10 +44,31 @@ namespace Agenda_ICS
             _db.ModifyEmployee(employeeKeyId, employeeName);
         }
 
-        public long CreateChantier(string chantierName, string refDevis, string adresse, 
-            int couleurId, EStatutChantier statut)
+        public long CreateChantier(
+            string chantierName, 
+            string refDevis, 
+            string adresse, 
+            int couleurId, 
+            EStatutChantier statut,
+            string dateAcceptationDevis,
+            string datePrevisionnelleTravaux,
+            int nbDeTechniciens,
+            int nbDHeuresAPlanifier,
+            float prixDeVenteHT
+            )
         {
-            return _db.CreateChantier(chantierName, refDevis, adresse, couleurId, statut);
+            return _db.CreateChantier(
+                chantierName, 
+                refDevis, 
+                adresse, 
+                couleurId, 
+                statut,
+                dateAcceptationDevis,
+                datePrevisionnelleTravaux,
+                nbDeTechniciens,
+                nbDHeuresAPlanifier,
+                prixDeVenteHT
+                );
         }
 
         public void RemoveChantier(long chantierKeyId)
@@ -55,10 +76,33 @@ namespace Agenda_ICS
             _db.RemoveChantier(chantierKeyId);
         }
 
-        public void ModifyChantier(long chantierKeyId, string chantierName, string refDevis, 
-            string adresse, int couleurId, EStatutChantier statut)
+        public void ModifyChantier(
+            long chantierKeyId, 
+            string chantierName, 
+            string refDevis, 
+            string adresse, 
+            int couleurId, 
+            EStatutChantier statut,
+            string dateAcceptationDevis,
+            string datePrevisionnelleTravaux,
+            int nbDeTechniciens,
+            int nbDHeuresAPlanifier,
+            float prixDeVenteHT
+            )
         {
-            _db.ModifyChantier(chantierKeyId, chantierName, refDevis, adresse, couleurId, statut);
+            _db.ModifyChantier(
+                chantierKeyId, 
+                chantierName,
+                refDevis,
+                adresse,
+                couleurId,
+                statut,
+                dateAcceptationDevis,
+                datePrevisionnelleTravaux,
+                nbDeTechniciens,
+                nbDHeuresAPlanifier,
+                prixDeVenteHT
+                );
         }
 
         public IEmployee[] GetEmployees()
@@ -257,15 +301,11 @@ namespace Agenda_ICS
 
         private string GetFilePathToDatas()
         {
-//#if DEBUG
-//            var solutionPath = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
-//            return solutionPath + @"\Agenda_ICS\BddTest\LinearIcsDb.mdf";
-//#else
             if (File.Exists("PathToDatas.txt"))
             {
                 var lines = File.ReadAllLines("PathToDatas.txt");
                 var path = lines[0];
-                //if (File.Exists(path))
+
                 if (Directory.Exists(path))
                 {
                         return path;
@@ -275,30 +315,9 @@ namespace Agenda_ICS
             var counter = 0;
             while (true)
             {
-                //using (var dlg = new System.Windows.Forms.OpenFileDialog())
-                //{
-                //    dlg.Filter = "data files (*.mdf)|*.mdf";
-                //    dlg.Title = "Sélectionnez le fichier de données";
-                //    var result = dlg.ShowDialog();
-                //    if (result != System.Windows.Forms.DialogResult.OK || string.IsNullOrWhiteSpace(dlg.FileName))
-                //    {
-                //        counter++;
-                //        if (counter == 2)
-                //        {
-                //            Environment.Exit(0);
-                //        }
-                //        MessageBox.Show("Vous devez sélectionner un fichier de données valide", "Erreur");
-                //        continue;
-                //    }
-
-                //    var content = new string[1];
-                //    content[0] = dlg.FileName;
-                //    File.WriteAllLines("PathToDatas.txt", content);
-
-                //    return dlg.FileName;
-                //}
                 if (MessageBox.Show("Merci d'indiquer la localisation du répertoire de données", "Configuration", MessageBoxButton.OK) == MessageBoxResult.OK)
-                { }
+                { 
+                }
 
                 using (var dlg = new System.Windows.Forms.FolderBrowserDialog())
                 {
@@ -321,7 +340,6 @@ namespace Agenda_ICS
                     return dlg.SelectedPath;
                 }
             }
-//#endif
         }
 
         private void InitiateTestModeIfNecessary(string folderPath)

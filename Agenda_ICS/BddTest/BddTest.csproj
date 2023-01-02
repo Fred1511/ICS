@@ -59,6 +59,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BTG_DOS_ICS.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="BTG_DOS_ICS_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>BTG_DOS_ICS.mdf</DependentUpon>
+    </Content>
     <Content Include="LinearIcsDb.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

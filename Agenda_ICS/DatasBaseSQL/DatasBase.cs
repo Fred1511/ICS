@@ -70,19 +70,37 @@ namespace NDatasBaseSQL
             }
         }
 
-        public long CreateChantier(string chantierName, string refDevis, string adresse, 
-            int couleurId, EStatutChantier statut)
+        public long CreateChantier(
+            string chantierName, 
+            string refDevis, 
+            string adresse, 
+            int couleurId,
+            EStatutChantier statut,
+            string dateAcceptationDevis,
+            string datePrevisionnelleTravaux,
+            int nbDeTechniciens,
+            int nbDHeuresAPlanifier,
+            float prixDeVenteHT
+            )
         {
             using (SqlCommand command = _connexion.CreateCommand())
             {
-                command.CommandText = $"INSERT INTO Chantiers (nom, refDevis, adresse, couleurId, statut)"
-                    + " VALUES (@nom, @refDevis, @adresse, @couleurId, @statut)"
+                command.CommandText = 
+                    $"INSERT INTO Chantiers (nom, refDevis, adresse, couleurId, statut, " 
+                    + "dateAcceptationDevis, datePrevisionnelleTravaux, nbDeTechniciens, nbDHeuresAPlanifier, prixDeVenteHT)"
+                    + " VALUES (@nom, @refDevis, @adresse, @couleurId, @statut, @dateAcceptationDevis, @datePrevisionnelleTravaux, "
+                    + "@nbDeTechniciens, @nbDHeuresAPlanifier, @prixDeVenteHT)"
                     + ";SELECT SCOPE_IDENTITY()";
                 command.Parameters.AddWithValue("@nom", chantierName);
                 command.Parameters.AddWithValue("@refDevis", refDevis);
                 command.Parameters.AddWithValue("@adresse", adresse);
                 command.Parameters.AddWithValue("@couleurId", couleurId);
                 command.Parameters.AddWithValue("@statut", (int)statut);
+                command.Parameters.AddWithValue("@dateAcceptationDevis", dateAcceptationDevis);
+                command.Parameters.AddWithValue("@datePrevisionnelleTravaux", datePrevisionnelleTravaux);
+                command.Parameters.AddWithValue("@nbDeTechniciens", nbDeTechniciens);
+                command.Parameters.AddWithValue("@nbDHeuresAPlanifier", nbDHeuresAPlanifier);
+                command.Parameters.AddWithValue("@prixDeVenteHT", prixDeVenteHT);
 
                 var lastId = Convert.ToInt32(command.ExecuteScalar());
                 return lastId;
@@ -138,9 +156,10 @@ namespace NDatasBaseSQL
             return tasks.ToArray();
         }
 
-        public void AddTaskToEmployee(long employeeKeyId, long chantierKeyId, DateTime beginsAt, DateTime endsAt)
+        public long AddTaskToEmployee(long employeeKeyId, long chantierKeyId, DateTime beginsAt, DateTime endsAt)
         {
-            AddTaskToEmployeeForSql(employeeKeyId, chantierKeyId, beginsAt, endsAt);
+            var task = AddTaskToEmployeeForSql(employeeKeyId, chantierKeyId, beginsAt, endsAt);
+            return task.KeyId;
         }
 
         public ITask ModifyTask(CTask taskModified)
@@ -472,8 +491,25 @@ namespace NDatasBaseSQL
             var adresse = reader.GetString(3);
             var couleurId = reader.GetInt32(4);
             var statut = (EStatutChantier)(reader.GetInt32(5));
+            var dateAcceptationDevis = reader.GetString(6);
+            var datePrevisionnelleTravaux = reader.GetString(7);
+            var nbDeTechniciens = reader.GetInt32(8);
+            var nbDHeuresAPlanifier = reader.GetInt32(9);
+            var prixDeVenteHT = (float)reader.GetDouble(10);
 
-            return new CChantier(keyId, nomChantier, refDevis, adresse, couleurId, statut);
+            return new CChantier(
+                keyId, 
+                nomChantier, 
+                refDevis, 
+                adresse, 
+                couleurId, 
+                statut,
+                dateAcceptationDevis,
+                datePrevisionnelleTravaux,
+                nbDeTechniciens,
+                nbDHeuresAPlanifier,
+                prixDeVenteHT
+                );
         }
     }
 }
