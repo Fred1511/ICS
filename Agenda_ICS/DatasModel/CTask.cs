@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NOutils;
+using System;
 using System.Collections.Generic;
 
 namespace NDatasModel
@@ -37,8 +38,8 @@ namespace NDatasModel
 
         public int GetNbDHeures()
         {
-            var beginsDay = GetDayOfDateAsString(_beginsAt);
-            var endsDay = GetDayOfDateAsString(_endsAt);
+            var beginsDay = DatesExpert.GetDayOfDateAsString(_beginsAt);
+            var endsDay = DatesExpert.GetDayOfDateAsString(_endsAt);
 
             if (beginsDay == endsDay)
             {
@@ -47,20 +48,9 @@ namespace NDatasModel
 
             var nbJoursOuvrableEntreBeginsEtEnds = CJoursOuvrablesSuccessifs.GetNbJoursOuvrableEntre(_beginsAt, _endsAt) - 1;
 
-            var nbHeuresOfFirstDay = (int)Math.Round((GetLastTimeOfTheDay(beginsDay) - _beginsAt).TotalHours);
-            var nbHeuresOfLastDay = (int)Math.Round((_endsAt - GetFirstTimeOfTheDay(endsDay)).TotalHours);
+            var nbHeuresOfFirstDay = (int)Math.Round((DatesExpert.GetLastTimeOfTheDay(beginsDay) - _beginsAt).TotalHours);
+            var nbHeuresOfLastDay = (int)Math.Round((_endsAt - DatesExpert.GetFirstTimeOfTheDay(endsDay)).TotalHours);
             int nbHeuresBetweenTheFirstAndTheLastDay = 10 * nbJoursOuvrableEntreBeginsEtEnds;
-            //var day = GetNextDay(beginsDay);
-            //while (true)
-            //{
-            //    if (day == endsDay)
-            //    {
-            //        break;
-            //    }
-
-            //    nbHeuresBetweenTheFirstAndTheLastDay += 10;
-            //    day = GetNextDay(day);
-            //}
 
             var total = nbHeuresOfFirstDay + nbHeuresBetweenTheFirstAndTheLastDay + nbHeuresOfLastDay;
             return total;
@@ -106,34 +96,5 @@ namespace NDatasModel
         }
 
         // *** METHODES PRIVEES **************
-
-        static DateTime GetFirstTimeOfTheDay(string dayAsString/*ex: 20230115 pour le 15/01/2023*/)
-        {
-            var year = int.Parse(dayAsString.Substring(0, 4));
-            var month = int.Parse(dayAsString.Substring(4, 2));
-            var day = int.Parse(dayAsString.Substring(6, 2));
-            return new DateTime(year, month, day, 8, 0, 0);
-        }
-
-        static DateTime GetLastTimeOfTheDay(string dayAsString/*ex: 20230115 pour le 15/01/2023*/)
-        {
-            var year = int.Parse(dayAsString.Substring(0, 4));
-            var month = int.Parse(dayAsString.Substring(4, 2));
-            var day = int.Parse(dayAsString.Substring(6, 2));
-            return new DateTime(year, month, day, 18, 0, 0);
-        }
-
-        static string GetNextDay(string dayAsString/*ex: 20230115 pour le 15/01/2023*/)
-        {
-            var day = GetFirstTimeOfTheDay(dayAsString);
-            var newDay = day + new TimeSpan(1, 0, 0, 0);
-            var newDayAsString = GetDayOfDateAsString(newDay);
-            return newDayAsString;
-        }
-
-        static string GetDayOfDateAsString(DateTime dateTime)
-        {
-            return dateTime.Year.ToString() + $"{dateTime.Month:00}" + $"{dateTime.Day:00}";
-        }
     }
 }

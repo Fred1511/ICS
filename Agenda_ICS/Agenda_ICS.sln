@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agenda_ICS", "Agenda_ICS\Agenda_ICS.csproj", "{B8280A9E-0056-462D-A0FB-BEAB8D18EC02}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf_test", "Wpf_test\Wpf_test.csproj", "{2B561A8D-23AE-43B8-8E73-FFC30F82719A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatasBaseOnFile", "DatasBaseOnFile\DatasBaseOnFile.csproj", "{53E80C13-66D7-4111-BFD1-C49410F0830E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outils", "Outils\Outils.csproj", "{800BA03B-2C92-4698-B603-03280B318457}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{53E80C13-66D7-4111-BFD1-C49410F0830E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53E80C13-66D7-4111-BFD1-C49410F0830E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53E80C13-66D7-4111-BFD1-C49410F0830E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{800BA03B-2C92-4698-B603-03280B318457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{800BA03B-2C92-4698-B603-03280B318457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{800BA03B-2C92-4698-B603-03280B318457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{800BA03B-2C92-4698-B603-03280B318457}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

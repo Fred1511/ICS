@@ -5,37 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Agenda_ICS.Views.Synthèse"
         mc:Ignorable="d"
-        Title="Synthèse" Height="230" Width="400">
+        Title="Synthèse" Height="290" Width="400">
     <StackPanel>
-        <Grid Margin="10">
+        <Grid Margin="10,0,10,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="70" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
             </Grid.RowDefinitions>
             <!--TITRES - 1ère COLONNE-->
-            <Label Grid.Row="0" Grid.Column="0" Content="Total des prix de vente HT :" 
+            <Label Grid.Row="0" Grid.Column="0" Content="Date début période :" 
                    FontSize="16" FontWeight="Bold" HorizontalAlignment="Right" VerticalContentAlignment="Center"
                    />
-            <Label Grid.Row="1" Grid.Column="0" Content="Total des heures à planifier :"
+            <Label Grid.Row="1" Grid.Column="0" Content="Total des prix de vente HT :" 
                    FontSize="16" FontWeight="Bold" HorizontalAlignment="Right" VerticalContentAlignment="Center"
                    />
-            <Label Grid.Row="2" Grid.Column="0" Content="Total des heures planifiées :"
+            <Label Grid.Row="2" Grid.Column="0" Content="Total des heures à planifier :"
+                   FontSize="16" FontWeight="Bold" HorizontalAlignment="Right" VerticalContentAlignment="Center"
+                   />
+            <Label Grid.Row="3" Grid.Column="0" Content="Total des heures planifiées :"
                    FontSize="16" FontWeight="Bold" HorizontalAlignment="Right" VerticalContentAlignment="Center"
                    />
 
             <!--VALEUR - 2ème COLONNE-->
-            <Label Name="TotalPrixDeVenteHT" Grid.Row="0" Grid.Column="1" Content="145000 €" 
+            <TextBox Name="DateDébutPériode" Grid.Row="0" Grid.Column="1" Text="01/01/2023" 
+                   FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Height="25"
+                   />
+            <Label Name="TotalPrixDeVenteHT" Grid.Row="1" Grid.Column="1" Content="145000 €" 
                    FontSize="16" HorizontalAlignment="Left" VerticalContentAlignment="Center"
                    />
-            <Label Name="TotalHeuresAPlanifier" Grid.Row="1" Grid.Column="1" Content="145" 
+            <Label Name="TotalHeuresAPlanifier" Grid.Row="2" Grid.Column="1" Content="145" 
                    FontSize="16" HorizontalAlignment="Left" VerticalContentAlignment="Center"
                    />
-            <Label Name="TotalHeuresPlanifiées" Grid.Row="2" Grid.Column="1" Content="1540" 
+            <Label Name="TotalHeuresPlanifiées" Grid.Row="3" Grid.Column="1" Content="1540" 
                    FontSize="16" HorizontalAlignment="Left" VerticalContentAlignment="Center"
                    />
         </Grid>

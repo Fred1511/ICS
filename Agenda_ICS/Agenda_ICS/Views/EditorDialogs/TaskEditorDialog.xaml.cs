@@ -1,5 +1,6 @@
 ﻿using Agenda_ICS.Views.Calendar;
 using NDatasModel;
+using NOutils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,10 +33,10 @@ namespace Agenda_ICS.Views
 
             InitializeComponent();
 
-            DayOfBeginningOfTask.Text = FormatDay(_taskcopy.BeginsAt);
-            HourOfBeginningOfTask.Text = FormatHour(_taskcopy.BeginsAt);
-            DayOfEndOfTask.Text = FormatDay(_taskcopy.EndsAt);
-            HourOfEndOfTask.Text = FormatHour(_taskcopy.EndsAt);
+            DayOfBeginningOfTask.Text = DatesExpert.FormatDay(_taskcopy.BeginsAt);
+            HourOfBeginningOfTask.Text = DatesExpert.FormatHour(_taskcopy.BeginsAt);
+            DayOfEndOfTask.Text = DatesExpert.FormatDay(_taskcopy.EndsAt);
+            HourOfEndOfTask.Text = DatesExpert.FormatHour(_taskcopy.EndsAt);
         }
 
         ~TaskEditorDialog()
@@ -102,20 +103,18 @@ namespace Agenda_ICS.Views
 
         private void OnTimer_500ms(object sender, EventArgs e)
         {
-            var durée = _taskcopy.GetNbDHeures();
-
-            DayOfBeginningOfTask.Background = new SolidColorBrush((false == IsDayValid(DayOfBeginningOfTask.Text) ? Colors.Orange : Colors.White));
-            DayOfEndOfTask.Background = new SolidColorBrush((false == IsDayValid(DayOfEndOfTask.Text) ? Colors.Orange : Colors.White));
-            HourOfBeginningOfTask.Background = new SolidColorBrush((false == IsHourValid(HourOfBeginningOfTask.Text) ? Colors.Orange : Colors.White));
-            HourOfEndOfTask.Background = new SolidColorBrush((false == IsHourValid(HourOfEndOfTask.Text) ? Colors.Orange : Colors.White));
+            DayOfBeginningOfTask.Background = new SolidColorBrush((false == DatesExpert.IsDayValid(DayOfBeginningOfTask.Text) ? Colors.Orange : Colors.White));
+            DayOfEndOfTask.Background = new SolidColorBrush((false == DatesExpert.IsDayValid(DayOfEndOfTask.Text) ? Colors.Orange : Colors.White));
+            HourOfBeginningOfTask.Background = new SolidColorBrush((false == DatesExpert.IsHourValid(HourOfBeginningOfTask.Text) ? Colors.Orange : Colors.White));
+            HourOfEndOfTask.Background = new SolidColorBrush((false == DatesExpert.IsHourValid(HourOfEndOfTask.Text) ? Colors.Orange : Colors.White));
         }
 
         private void OnClickValider(object sender, RoutedEventArgs e)
         {
-            if (false == IsDayValid(DayOfBeginningOfTask.Text, out int dayBeginning, out int monthBeginning, out int yearBeginning) 
-                || false == IsDayValid(DayOfEndOfTask.Text, out int dayEnding, out int monthEnding, out int yearEnding)
-                || false == IsHourValid(HourOfBeginningOfTask.Text, out int hourBeginning, out int minutesBeginning) 
-                || false == IsHourValid(HourOfEndOfTask.Text, out int hourEnding, out int minutesEnding)
+            if (false == DatesExpert.IsDayValid(DayOfBeginningOfTask.Text, out int dayBeginning, out int monthBeginning, out int yearBeginning) 
+                || false == DatesExpert.IsDayValid(DayOfEndOfTask.Text, out int dayEnding, out int monthEnding, out int yearEnding)
+                || false == DatesExpert.IsHourValid(HourOfBeginningOfTask.Text, out int hourBeginning, out int minutesBeginning) 
+                || false == DatesExpert.IsHourValid(HourOfEndOfTask.Text, out int hourEnding, out int minutesEnding)
                 )
             {
                 MessageBox.Show("Merci de corriger les éléments colorisés", "Merci de corriger ...", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -163,108 +162,6 @@ namespace Agenda_ICS.Views
             }
 
             this.Close();
-        }
-
-        private string FormatDay(DateTime date)
-        {
-            return $"{date.Day:00}/{date.Month:00}/{date.Year}";
-        }
-
-        private string FormatHour(DateTime date)
-        {
-            return $"{date.Hour:00}:{date.Minute:00}";
-        }
-
-        private bool IsDayValid(string dateAsString)
-        {
-            return IsDayValid(dateAsString, out int day, out int month, out int year);
-        }
-
-        private bool IsDayValid(string dateAsString, out int day, out int month, out int year)
-        {
-            day = 0;
-            month = 0;
-            year = 0;
-
-            try
-            {
-                // Récupération des éléments jour, mois, année sous forme de texte
-                var components = dateAsString.Split('/');
-                if (components.Length < 2 || components.Length > 3)
-                {
-                    return false;
-                }
-                var dayAsString = components[0];
-                var monthAsString = components[1];
-                var yearAsString = DateTime.Now.Year.ToString();
-                if (components.Length == 3)
-                {
-                    yearAsString = components[2];
-                }
-
-                // Transformation des éléments jour, mois, année sous forme d'entiers
-                if (false == int.TryParse(dayAsString, out day))
-                {
-                    return false;
-                }
-                if (false == int.TryParse(monthAsString, out month))
-                {
-                    return false;
-                }
-                if (false == int.TryParse(yearAsString, out year))
-                {
-                    return false;
-                }
-
-                var date = new DateTime(year, month, day);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool IsHourValid(string timeAsString)
-        {
-            return IsHourValid(timeAsString, out int hour, out int minutes);
-        }
-
-        private bool IsHourValid(string timeAsString, out int hour, out int minutes)
-        {
-            hour = 0;
-            minutes = 0;
-
-            try
-            {
-                // Récupération des éléments jour, mois, année sous forme de texte
-                var components = timeAsString.Split(':');
-                if (components.Length != 2)
-                {
-                    return false;
-                }
-                var hourAsString = components[0];
-                var minutesAsString = components[1];
-
-                // Transformation des éléments jour, mois, année sous forme d'entiers
-                if (false == int.TryParse(hourAsString, out hour))
-                {
-                    return false;
-                }
-                if (false == int.TryParse(minutesAsString, out minutes))
-                {
-                    return false;
-                }
-
-                var date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hour, minutes, 0);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         private void OnKeyDown(object sender, System.Windows.Input.KeyEventArgs e)

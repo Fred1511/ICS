@@ -128,7 +128,7 @@ namespace Agenda_ICS
 
         private void OnClick_DisplaySynthèse(object sender, RoutedEventArgs e)
         {
-            (new Views.Synthèse.SynthèseDlg()).ShowDialog();
+            (new Views.Synthèse.SynthèseDlg()).Show();
         }
     }
 }

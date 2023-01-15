@@ -1,0 +1,6 @@
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\Outils\bin\Debug\Outils.dll
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\Outils\bin\Debug\Outils.pdb
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\Outils\obj\Debug\Outils.csproj.AssemblyReference.cache
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\Outils\obj\Debug\Outils.csproj.CoreCompileInputs.cache
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\Outils\obj\Debug\Outils.dll
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\Outils\obj\Debug\Outils.pdb

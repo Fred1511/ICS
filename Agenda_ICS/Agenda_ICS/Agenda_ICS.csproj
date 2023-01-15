@@ -249,6 +249,10 @@
       <Project>{8a3dc83a-5604-4042-8982-69de97d2ff8c}</Project>
       <Name>DatasModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Outils\Outils.csproj">
+      <Project>{800ba03b-2c92-4698-b603-03280b318457}</Project>
+      <Name>Outils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
