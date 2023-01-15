@@ -119,7 +119,6 @@
     <Compile Include="Views\Calendar\CalendarOfEmployee\CalendarOfEmployee.cs" />
     <Compile Include="Views\Calendar\CalendarOfEmployee\CHatchedBrushCreator.cs" />
     <Compile Include="Views\Calendar\CContextMenuOnTaskController.cs" />
-    <Compile Include="Views\Calendar\CJoursOuvrablesSuccessifs.cs" />
     <Compile Include="Views\Calendar\DatasForDraggingANewTask.cs" />
     <Compile Include="Views\Calendar\DatasForDraggingLimitOfAnOldTask.cs" />
     <Compile Include="Views\Calendar\DatasForMovingAnOldTask.cs" />
@@ -149,6 +148,9 @@
     </Compile>
     <Compile Include="Views\EditorDialogs\TaskEditorDialog.xaml.cs">
       <DependentUpon>TaskEditorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Synthèse\SynthèseDlg.xaml.cs">
+      <DependentUpon>SynthèseDlg.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -185,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditorDialogs\TaskEditorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Synthèse\SynthèseDlg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -77,10 +77,10 @@ namespace Agenda_ICS
             //}
         }
 
-        private long _employeeKeyId = 8;
+        //private long _employeeKeyId = 8;
 
-        private long _keyIdTask;
+        //private long _keyIdTask;
 
-        private int _stepCounter;
+        //private int _stepCounter;
     }
 }

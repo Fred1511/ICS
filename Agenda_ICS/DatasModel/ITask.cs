@@ -17,5 +17,7 @@ namespace NDatasModel
         double AltitudeUI { get; }
 
         bool IsTaskRunningDuring(DateTime time);
+
+        int GetNbDHeures();
     }
 }

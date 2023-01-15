@@ -117,8 +117,19 @@ namespace NDatasBaseSQL
             }
         }
 
-        public void ModifyChantier(long chantierKeyId, string chantierName, string refDevis, 
-            string adresse, int couleurId, EStatutChantier statut)
+        public void ModifyChantier(
+            long chantierKeyId, 
+            string chantierName, 
+            string refDevis, 
+            string adresse, 
+            int couleurId, 
+            EStatutChantier statut,
+            string dateAcceptationDevis,
+            string datePrevisionnelleTravaux,
+            int nbDeTechniciens,
+            int nbDHeuresAPlanifier,
+            float prixDeVenteHT
+            )
         {
             using (SqlCommand command = _connexion.CreateCommand())
             {
@@ -130,6 +141,11 @@ namespace NDatasBaseSQL
                 command.Parameters.AddWithValue("@adresse", adresse);
                 command.Parameters.AddWithValue("@couleurId", couleurId);
                 command.Parameters.AddWithValue("@statut", (int)statut);
+                command.Parameters.AddWithValue("@adresse", dateAcceptationDevis);
+                command.Parameters.AddWithValue("@adresse", datePrevisionnelleTravaux);
+                command.Parameters.AddWithValue("@adresse", nbDeTechniciens);
+                command.Parameters.AddWithValue("@adresse", nbDHeuresAPlanifier);
+                command.Parameters.AddWithValue("@adresse", prixDeVenteHT);
 
                 var nbLignesAffectées = command.ExecuteNonQuery();
                 if (1 != nbLignesAffectées)
@@ -283,6 +299,11 @@ namespace NDatasBaseSQL
             }
 
             return joursFériés.ToArray();
+        }
+
+        public ITask[] GetTasks()
+        {
+            throw new NotImplementedException();
         }
 
         // *** RESTRICTED ******************

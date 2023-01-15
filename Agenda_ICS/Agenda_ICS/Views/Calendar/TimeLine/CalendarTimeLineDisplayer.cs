@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NDatasModel;
+using System;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -13,7 +14,7 @@ namespace Agenda_ICS.Views.Calendar.TimeLine
         {
             Background = new SolidColorBrush(Colors.LightPink);
 
-            var nbDays = nbWeeks * Constantes._nbJoursOuvrablesParSemaine;
+            var nbDays = nbWeeks * CJoursOuvrablesSuccessifs._nbJoursOuvrablesParSemaine;
             for (var idDay = 0; idDay < nbDays; idDay++)
             {
                 var date = CJoursOuvrablesSuccessifs.GetDayAfterXJoursOuvrables(firstDay, idDay);
@@ -40,7 +41,7 @@ namespace Agenda_ICS.Views.Calendar.TimeLine
         {
             foreach (Border border in Children)
             {
-                border.Width = widthOfWeek / Constantes._nbJoursOuvrablesParSemaine;
+                border.Width = widthOfWeek / CJoursOuvrablesSuccessifs._nbJoursOuvrablesParSemaine;
                 border.Height = Height;
 
                 var day = (DayTimeLineDisplayer)(border.Child);

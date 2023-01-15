@@ -102,6 +102,8 @@ namespace Agenda_ICS.Views
 
         private void OnTimer_500ms(object sender, EventArgs e)
         {
+            var durée = _taskcopy.GetNbDHeures();
+
             DayOfBeginningOfTask.Background = new SolidColorBrush((false == IsDayValid(DayOfBeginningOfTask.Text) ? Colors.Orange : Colors.White));
             DayOfEndOfTask.Background = new SolidColorBrush((false == IsDayValid(DayOfEndOfTask.Text) ? Colors.Orange : Colors.White));
             HourOfBeginningOfTask.Background = new SolidColorBrush((false == IsHourValid(HourOfBeginningOfTask.Text) ? Colors.Orange : Colors.White));

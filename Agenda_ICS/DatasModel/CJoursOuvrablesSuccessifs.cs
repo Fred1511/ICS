@@ -4,17 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Agenda_ICS.Views.Calendar
+namespace NDatasModel
 {
-    class CJoursOuvrablesSuccessifs
+    public class CJoursOuvrablesSuccessifs
     {
+        public static int _nbJoursOuvrablesParSemaine = 5;
+
         public static DateTime GetDayAfterXJoursOuvrables(DateTime firstDayOuvrable, int nbJoursOuvrablesAprès)
         {
             if (0 == nbJoursOuvrablesAprès)
             {
                 return firstDayOuvrable;
             }
-            else if (7 == Constantes._nbJoursOuvrablesParSemaine)
+            else if (7 == _nbJoursOuvrablesParSemaine)
             {
                 return firstDayOuvrable + new TimeSpan(nbJoursOuvrablesAprès, 0, 0, 0);
             }
@@ -28,7 +30,7 @@ namespace Agenda_ICS.Views.Calendar
                 countJours++;
 
                 dayOfWeek = (dayOfWeek + 1) % 7;
-                if (dayOfWeek >= 1 && dayOfWeek <= Constantes._nbJoursOuvrablesParSemaine)
+                if (dayOfWeek >= 1 && dayOfWeek <= _nbJoursOuvrablesParSemaine)
                 {
                     countJourOuvrables++;
                 }
@@ -42,7 +44,7 @@ namespace Agenda_ICS.Views.Calendar
 
         public static DateTime GetFirstJourOuvrableAfter(DateTime day)
         {
-            if (7 == Constantes._nbJoursOuvrablesParSemaine)
+            if (7 == _nbJoursOuvrablesParSemaine)
             {
                 return day;
             }
@@ -59,7 +61,7 @@ namespace Agenda_ICS.Views.Calendar
                 countJours++;
 
                 dayOfWeek = (dayOfWeek + 1) % 7;
-                if (dayOfWeek >= 1 && dayOfWeek <= Constantes._nbJoursOuvrablesParSemaine)
+                if (dayOfWeek >= 1 && dayOfWeek <= _nbJoursOuvrablesParSemaine)
                 {
                     return day + new TimeSpan(countJours, 0, 0, 0);
                 }
@@ -68,7 +70,7 @@ namespace Agenda_ICS.Views.Calendar
 
         public static DateTime GetFirstJourOuvrableBefore(DateTime day)
         {
-            if (7 == Constantes._nbJoursOuvrablesParSemaine)
+            if (7 == _nbJoursOuvrablesParSemaine)
             {
                 return day;
             }
@@ -99,7 +101,7 @@ namespace Agenda_ICS.Views.Calendar
 
         private static bool IsJourOuvrable(int dayOfWeek)
         {
-            return dayOfWeek >= 1 && dayOfWeek <= Constantes._nbJoursOuvrablesParSemaine;
+            return dayOfWeek >= 1 && dayOfWeek <= _nbJoursOuvrablesParSemaine;
         }
 
         public static int GetNbJoursOuvrableEntre(DateTime firstDayOuvrable, DateTime lastDayOuvrable)
@@ -109,14 +111,14 @@ namespace Agenda_ICS.Views.Calendar
             {
                 return nbDays;
             }
-            var day = firstDayOuvrable;
+
             var dayOfWeek = (int)(firstDayOuvrable.DayOfWeek);
             var countJourOuvrables = nbDays;
             for (var i = 1; i < nbDays; i++)
             {
                 dayOfWeek = (dayOfWeek + 1) % 7;
 
-                if (dayOfWeek < 1 || dayOfWeek > Constantes._nbJoursOuvrablesParSemaine)
+                if (dayOfWeek < 1 || dayOfWeek > _nbJoursOuvrablesParSemaine)
                 {
                     countJourOuvrables--;
                 }

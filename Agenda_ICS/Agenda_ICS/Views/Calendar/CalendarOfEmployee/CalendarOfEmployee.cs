@@ -39,7 +39,7 @@ namespace Agenda_ICS.Views.Calendar
             _dockPanel = new DockPanel();
             _firstDay = new DateTime(firstDay.Year, firstDay.Month, firstDay.Day, 0, 0, 0);
 
-            var nbDays = nbWeeks * Constantes._nbJoursOuvrablesParSemaine;
+            var nbDays = nbWeeks * CJoursOuvrablesSuccessifs._nbJoursOuvrablesParSemaine;
             _days = new DayOfEmployee[nbDays];
 
             for (var idDay = 0; idDay < nbDays; idDay++)
@@ -96,7 +96,7 @@ namespace Agenda_ICS.Views.Calendar
             foreach (var children in _dockPanel.Children)
             {
                 var border = (Border)children;
-                border.Width = _widthOfWeek / Constantes._nbJoursOuvrablesParSemaine;
+                border.Width = _widthOfWeek / CJoursOuvrablesSuccessifs._nbJoursOuvrablesParSemaine;
                 border.Height = Height;
 
                 var day = (DayOfEmployee)(border.Child);
@@ -286,7 +286,7 @@ namespace Agenda_ICS.Views.Calendar
             {
                 x = 0;
             }
-            var widthOfDay = _widthOfWeek / Constantes._nbJoursOuvrablesParSemaine;
+            var widthOfDay = _widthOfWeek / CJoursOuvrablesSuccessifs._nbJoursOuvrablesParSemaine;
             var nbDays = (int)(x / widthOfDay);
             var x_in_lastDay = x - nbDays * widthOfDay;
             var timeInHoursInLastDay = Constantes._firstHourOfTheDay
@@ -347,7 +347,7 @@ namespace Agenda_ICS.Views.Calendar
             }
 
             var nbDays = CJoursOuvrablesSuccessifs.GetNbJoursOuvrableEntre(_firstDay, dateTime);
-            var x = (_widthOfWeek / Constantes._nbJoursOuvrablesParSemaine) * nbDays
+            var x = (_widthOfWeek / CJoursOuvrablesSuccessifs._nbJoursOuvrablesParSemaine) * nbDays
                 + DayMargin
                 + TimeElementWidth * (dateTime.Hour - Constantes._firstHourOfTheDay) / Constantes._timeElementDuration_h;
             return x;
@@ -800,7 +800,7 @@ namespace Agenda_ICS.Views.Calendar
             var nbOfMondaysSeen = 0;
             for(var i = 0; i < NbOfDays; i++)
             {
-                var dayOfWeek = (firstDayOfWeek + i) % Constantes._nbJoursOuvrablesParSemaine;
+                var dayOfWeek = (firstDayOfWeek + i) % CJoursOuvrablesSuccessifs._nbJoursOuvrablesParSemaine;
                 if (1 == dayOfWeek && i > 0)
                 {
                     nbOfMondaysSeen++;

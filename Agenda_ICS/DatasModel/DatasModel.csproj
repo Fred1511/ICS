@@ -60,6 +60,7 @@
     <Compile Include="CEmployement.cs" />
     <Compile Include="CEmployee.cs" />
     <Compile Include="CJourFérié.cs" />
+    <Compile Include="CJoursOuvrablesSuccessifs.cs" />
     <Compile Include="IChantier.cs" />
     <Compile Include="IEmployee.cs" />
     <Compile Include="IDatasBase.cs" />

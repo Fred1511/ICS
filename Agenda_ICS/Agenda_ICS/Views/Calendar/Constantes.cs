@@ -32,8 +32,6 @@ namespace Agenda_ICS.Views.Calendar
 
         public static double _proportionMargin = 0.5;
 
-        public static int _nbJoursOuvrablesParSemaine = 5;
-
         public static int _nbWeeksMaxDisplayable = 3;
 
         public static int _nbWeeksMinDisplayable = 1;

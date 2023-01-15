@@ -60,17 +60,39 @@ namespace Agenda_ICS
             {
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
-                Orientation = Orientation.Horizontal,
+                Orientation = Orientation.Vertical,
                 Height = Constantes._heightOfTimeLine + Constantes._heightOfGlobalTimeLine + Constantes._separatorUnderGlobalTimelineThickness,
                 Width = Constantes._widthOfNameOfEmployeeLabel,
             };
+
+            //var btnPanel = new StackPanel()
+            //{
+            //    HorizontalAlignment = HorizontalAlignment.Center,
+            //    VerticalAlignment = VerticalAlignment.Center,
+            //    Orientation = Orientation.Vertical,
+            //    Height = Constantes._heightOfTimeLine + Constantes._heightOfGlobalTimeLine + Constantes._separatorUnderGlobalTimelineThickness,
+            //    Width = Constantes._widthOfNameOfEmployeeLabel,
+            //};
+
             var configurationButton = new Button()
             {
                 Content = "Configuration",
-                Width = 100
+                Width = 100,
+                Height = 30,
+                Margin = new Thickness(5),
             };
             configurationButton.Click += OnClick_Configuration;
             _caseVideOfTimeLine.Children.Add(configurationButton);
+
+            var displaySynthèseButton = new Button()
+            {
+                Content = "Synthèse",
+                Width = 100,
+                Height = 30,
+                Margin = new Thickness(5, 0, 5, 5),
+            };
+            displaySynthèseButton.Click += OnClick_DisplaySynthèse;
+            _caseVideOfTimeLine.Children.Add(displaySynthèseButton);
 
             DockPanel.SetDock(_caseVideOfTimeLine, Dock.Top);
             UpdateEmployeesNamesGrid();
@@ -102,6 +124,11 @@ namespace Agenda_ICS
             (new Views.Configuration.ConfigurationWnd()).ShowDialog();
             UpdateEmployeesNamesGrid();
             Window_SizeChanged(null, null);
+        }
+
+        private void OnClick_DisplaySynthèse(object sender, RoutedEventArgs e)
+        {
+            (new Views.Synthèse.SynthèseDlg()).ShowDialog();
         }
     }
 }

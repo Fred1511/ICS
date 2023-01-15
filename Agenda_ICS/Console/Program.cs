@@ -39,6 +39,7 @@ namespace NConsole
 
             //var test = new ReadDatasOnFile();
             //test.Core();
+            ManageBddLinq();
 
             System.Console.WriteLine("Press any key to exit.....");
             System.Console.ReadKey();
@@ -67,66 +68,27 @@ namespace NConsole
             System.Console.WriteLine("Recognized text: " + e.Result.Text);
         }
         
-        private static void SpeakSimple()
-        {
-            // Initialize a new instance of the SpeechSynthesizer.  
-            SpeechSynthesizer synth = new SpeechSynthesizer();
-
-            // Configure the audio output.   
-            synth.SetOutputToDefaultAudioDevice();
-
-            // Speak a string.  
-            synth.Speak("K M, démarrer la pompe M L 2.");
-            synth.Speak("K R, effectuez une extraction.");
-
-            SpeakWithVariations();
-        }
-
-        private static void SpeakWithVariations()
-        {
-            PromptBuilder promptBuilder = new PromptBuilder();
-            promptBuilder.AppendText("Hello world");
-
-            PromptStyle promptStyle = new PromptStyle();
-            promptStyle.Volume = PromptVolume.Soft;
-            promptStyle.Rate = PromptRate.Slow;
-            promptBuilder.StartStyle(promptStyle);
-            promptBuilder.AppendText("and hello to the universe too.");
-            promptBuilder.EndStyle();
-
-            promptBuilder.AppendText("On this day, ");
-            promptBuilder.AppendTextWithHint(DateTime.Now.ToShortDateString(), SayAs.Date);
-
-            promptBuilder.AppendText(", we're gathered here to learn");
-            promptBuilder.AppendText("all", PromptEmphasis.Strong);
-            promptBuilder.AppendText("about");
-            promptBuilder.AppendTextWithHint("WPF", SayAs.SpellOut);
-
-            SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer();
-            speechSynthesizer.Speak(promptBuilder);
-        }
-
         private static void ManageBddLinq()
         {
             var con = new SqlConnection();
             con.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; 
-                            AttachDbFilename = D:\CloudStation\Agenda_ICS\Console\AgendaDb.mdf; 
+                            AttachDbFilename = C:\Users\Utilisateur\Documents\ICS\ArchiveDbBatigest\BTG_DOS_ICS.mdf; 
                             Integrated Security = True";
             con.Open();
 
-            using (SqlCommand command = new SqlCommand("SELECT * FROM Employees", con))
+            using (SqlCommand command = new SqlCommand("SELECT Nom FROM Devis WHERE Code='00001011'", con))
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    System.Console.WriteLine("{0} {1}",
-                        reader.GetInt32(0), reader.GetString(1));
+                    System.Console.WriteLine("{0}",
+                        reader.GetString(0));
                 }
             }
 
-            SqlCommand cmd = new SqlCommand("INSERT INTO Employees (EmployeID, Beginning, End) VALUES (@V1, @V2, @V3");
+            //SqlCommand cmd = new SqlCommand("INSERT INTO Employees (EmployeID, Beginning, End) VALUES (@V1, @V2, @V3");
 
-            DateTime beginning = DateTime.Now;
+            //DateTime beginning = DateTime.Now;
 
             //cmd.Parameters.AddWithValue("@V1", 1);
             //cmd.Parameters.AddWithValue("@V2", beginning);
