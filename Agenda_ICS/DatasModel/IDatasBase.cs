@@ -43,6 +43,8 @@ namespace NDatasModel
 
         IChantier[] GetChantiers();
 
+        IChantier[] GetBatigestChantiers();
+
         ITask[] GetTasksOfEmployee(long employeeKeyId, DateTime firstMonday, int nbWeeks);
 
         ITask GetTask(long keyId);

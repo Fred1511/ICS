@@ -22,7 +22,9 @@
                 Click="OnClick_RemoveChantier" Background="#FFE0E0E0" Foreground="#FFA89E9E" FontWeight="Bold" Height="23" IsEnabled="False"/>
         <Button Content="Modifier" HorizontalAlignment="Left" Margin="10,303,0,0" VerticalAlignment="Top" Width="141" Height="23" 
                 Click="OnClick_ModifyChantier"/>
-        <Button Content="Ajouter un chantier" HorizontalAlignment="Left" Margin="10,339,0,0" VerticalAlignment="Top" Width="141" Height="23" 
+        <Button Content="Ajouter un chantier" HorizontalAlignment="Left" Margin="10,339,0,0" VerticalAlignment="Top" Width="140" Height="23" 
                 Click="OnClick_CreateChantier" FontWeight="Bold"/>
+        <Button Content="Importer de BATIGEST" HorizontalAlignment="Left" Margin="160,339,0,0" VerticalAlignment="Top" Width="140" Height="23" 
+                Click="OnClick_ImporterDeBatigest" />
     </Grid>
 </UserControl>

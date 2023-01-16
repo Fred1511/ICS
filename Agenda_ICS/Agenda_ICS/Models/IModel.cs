@@ -52,6 +52,8 @@ namespace Agenda_ICS
 
         IChantier[] GetChantiers();
 
+        IChantier[] GetBatigestChantiers();
+
         ITask[] GetTasksOfEmployee(long employeeKeyId, DateTime firstMonday, int nbWeeks);
 
         long AddTaskToEmployee(long employeeKeyId, long chantierKeyId, DateTime beginsAt, DateTime endsAt);

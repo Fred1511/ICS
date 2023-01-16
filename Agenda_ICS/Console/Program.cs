@@ -76,23 +76,19 @@ namespace NConsole
                             Integrated Security = True";
             con.Open();
 
-            using (SqlCommand command = new SqlCommand("SELECT Nom FROM Devis WHERE Code='00001011'", con))
+            using (SqlCommand command = new SqlCommand("SELECT Code, Nom, Date, Adr, TotalHT FROM Devis WHERE Date > '2022-01-01'", con))
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    System.Console.WriteLine("{0}",
-                        reader.GetString(0));
+                    var idDevis = reader.GetString(0);
+                    var nom = reader.GetString(1);
+                    var date = reader.GetDateTime(2);
+                    var address = reader.GetString(3);
+                    var totalHT = reader.GetDouble(4);
+                    System.Console.WriteLine("{0} {1} {2} {3} {4}", idDevis, nom, date, address, totalHT);
                 }
             }
-
-            //SqlCommand cmd = new SqlCommand("INSERT INTO Employees (EmployeID, Beginning, End) VALUES (@V1, @V2, @V3");
-
-            //DateTime beginning = DateTime.Now;
-
-            //cmd.Parameters.AddWithValue("@V1", 1);
-            //cmd.Parameters.AddWithValue("@V2", beginning);
-            //cmd.Parameters.AddWithValue("@V3", Convert.ToDateTime(txtDatum.Text));
 
             con.Close();
         }

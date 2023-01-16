@@ -1,0 +1,34 @@
+﻿<Window x:Class="Agenda_ICS.Views.EditorDialogs.ImportFromBatigest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Agenda_ICS.Views.EditorDialogs"
+        mc:Ignorable="d"
+        Title="ImportFromBatigest" Height="450" Width="800">
+    <StackPanel Orientation="Vertical">
+        <Label Content="Liste des chantiers exportables" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Margin="10"  />
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <Label Content="Contient :" HorizontalAlignment="Left" Width="64" />
+            <TextBox Name="Filter" HorizontalAlignment="Left" Width="229" Height="30" Margin="10,0,0,0" 
+                     TextChanged="OnFilterChantierChanged" />
+        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="150" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="220" />
+            </Grid.RowDefinitions>
+            <ListBox Grid.Row="0" Grid.Column="0" Name="Chantiers" HorizontalAlignment="Stretch" Margin="10" 
+                 VerticalAlignment="Top" />
+            <StackPanel Grid.Row="0" Grid.Column="1" Name="Filtrage" Orientation="Vertical" Margin="10" >
+                <Label Content="Classement" HorizontalAlignment="Center" FontWeight="Bold" />
+                <RadioButton Name="ClassementNom_radioBtn" Content="Nom" Margin="5" IsChecked="True" Click="ClassementRadioBtn_Click" />
+                <RadioButton Name="ClassementNuméro_radioBtn" Content="Numéro" Margin="5" Click="ClassementRadioBtn_Click"/>
+            </StackPanel>
+        </Grid>
+        <Button Content="Importer" Click="ImportChantierClick" Width="100" Height="40" FontSize="16" Margin="20" />
+    </StackPanel>
+</Window>

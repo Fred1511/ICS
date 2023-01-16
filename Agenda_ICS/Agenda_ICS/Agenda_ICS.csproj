@@ -146,6 +146,9 @@
     <Compile Include="Views\EditorDialogs\EmployeeEditorDialog.xaml.cs">
       <DependentUpon>EmployeeEditorDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditorDialogs\ImportFromBatigest.xaml.cs">
+      <DependentUpon>ImportFromBatigest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditorDialogs\TaskEditorDialog.xaml.cs">
       <DependentUpon>TaskEditorDialog.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditorDialogs\EmployeeEditorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditorDialogs\ImportFromBatigest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -17,15 +17,15 @@ namespace Agenda_ICS
         {
             Instance = this;
 
-            var folderPath = GetFilePathToDatas();
-            _db = new NDatasBaseOnFile.DatasBase(folderPath);
+            (string pathToDatasDirectory, string pathToBatigestDirectory) = GetFilePathToDatas();
+            _db = new NDatasBaseOnFile.DatasBase(pathToDatasDirectory, pathToBatigestDirectory);
 
-            InitiateTestModeIfNecessary(folderPath);
+            InitiateTestModeIfNecessary(pathToDatasDirectory);
         }
 
         ~Model()
         {
-            var folderPath = GetFilePathToDatas();
+            var folderPath = GetFilePathToDatas().pathToDataDirectory;
             File.Delete(folderPath + @"\TestId_" + _testeurId);
         }
 
@@ -238,6 +238,11 @@ namespace Agenda_ICS
             return _db.GetChantier(chantierKeyId);
         }
 
+        public IChantier[] GetBatigestChantiers()
+        {
+            return _db.GetBatigestChantiers();
+        }
+
         public IEmployee GetEmployee(long employeeKeyId)
         {
             return _db.GetEmployee(employeeKeyId);
@@ -304,46 +309,79 @@ namespace Agenda_ICS
 
         private Dictionary<long, CTask> _dictionaryOfTasksCopied = new Dictionary<long, CTask>();
 
-        private string GetFilePathToDatas()
-        {
-            if (File.Exists("PathToDatas.txt"))
-            {
-                var lines = File.ReadAllLines("PathToDatas.txt");
-                var path = lines[0];
+        private const string PathToDatas = "PathToDatas.txt";
 
-                if (Directory.Exists(path))
+        private (string pathToDataDirectory, string pathToBatigestDirectory) GetFilePathToDatas()
+        {
+            if (File.Exists(PathToDatas))
+            {
+                var lines = File.ReadAllLines(PathToDatas);
+                var pathToDataDirectory = lines[0];
+                var pathToBatigestDirectory = lines[1];
+
+                if (Directory.Exists(pathToDataDirectory) && Directory.Exists(pathToBatigestDirectory))
                 {
-                        return path;
+                    return (pathToDataDirectory, pathToBatigestDirectory);
                 }
             }
 
-            var counter = 0;
-            while (true)
             {
-                if (MessageBox.Show("Merci d'indiquer la localisation du répertoire de données", "Configuration", MessageBoxButton.OK) == MessageBoxResult.OK)
-                { 
-                }
+                var counter = 0;
+                var lines = new string[2];
 
-                using (var dlg = new System.Windows.Forms.FolderBrowserDialog())
+                while (true)
                 {
-                    var result = dlg.ShowDialog();
-                    if (result != System.Windows.Forms.DialogResult.OK || string.IsNullOrWhiteSpace(dlg.SelectedPath))
+                    if (MessageBox.Show("Merci d'indiquer la localisation du répertoire de données", "Configuration", MessageBoxButton.OK) == MessageBoxResult.OK)
                     {
-                        counter++;
-                        if (counter == 2)
-                        {
-                            Environment.Exit(0);
-                        }
-                        MessageBox.Show("Vous devez sélectionner un répertoire valide", "Erreur");
-                        continue;
                     }
 
-                    var content = new string[1];
-                    content[0] = dlg.SelectedPath;
-                    File.WriteAllLines("PathToDatas.txt", content);
+                    using (var dlg = new System.Windows.Forms.FolderBrowserDialog())
+                    {
+                        var result = dlg.ShowDialog();
+                        if (result != System.Windows.Forms.DialogResult.OK || string.IsNullOrWhiteSpace(dlg.SelectedPath))
+                        {
+                            counter++;
+                            if (counter == 2)
+                            {
+                                Environment.Exit(0);
+                            }
+                            MessageBox.Show("Vous devez sélectionner un répertoire valide", "Erreur");
+                            continue;
+                        }
 
-                    return dlg.SelectedPath;
+                        lines[0] = dlg.SelectedPath;
+                        break;
+                    }
                 }
+
+                while (true)
+                {
+                    if (MessageBox.Show("Merci d'indiquer la localisation du fichier BATIGEST", "Configuration", MessageBoxButton.OK) == MessageBoxResult.OK)
+                    {
+                    }
+
+                    using (var dlg = new System.Windows.Forms.FolderBrowserDialog())
+                    {
+                        var result = dlg.ShowDialog();
+                        if (result != System.Windows.Forms.DialogResult.OK || string.IsNullOrWhiteSpace(dlg.SelectedPath))
+                        {
+                            counter++;
+                            if (counter == 2)
+                            {
+                                Environment.Exit(0);
+                            }
+                            MessageBox.Show("Vous devez sélectionner un répertoire valide", "Erreur");
+                            continue;
+                        }
+
+                        lines[1] = dlg.SelectedPath;
+                        break;
+                    }
+                }
+
+                File.WriteAllLines(PathToDatas, lines);
+
+                return (lines[0], lines[1]);
             }
         }
 

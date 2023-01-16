@@ -165,6 +165,11 @@ namespace NDatasBaseSQL
             return ReadChantiersFromSql();
         }
 
+        public IChantier[] GetBatigestChantiers()
+        {
+            throw new NotImplementedException();
+        }
+
         public ITask[] GetTasksOfEmployee(long employeeKeyId, DateTime periodBeginsAt, int nbWeeks)
         {
             var tasks = GetTasksOfEmployeeFromSql(employeeKeyId, periodBeginsAt, nbWeeks);

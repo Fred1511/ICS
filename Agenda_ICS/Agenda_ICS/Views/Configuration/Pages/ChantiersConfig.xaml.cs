@@ -1,4 +1,5 @@
 ﻿using Agenda_ICS.Views.Calendar;
+using Agenda_ICS.Views.EditorDialogs;
 using Agenda_ICS.Views.Editors;
 using NDatasModel;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Agenda_ICS.Views.Configuration.Pages
     /// <summary>
     /// Logique d'interaction pour ChantiersConfig.xaml
     /// </summary>
-    public partial class ChantiersConfig : UserControl, IDialogWndOwner
+    public partial class ChantiersConfig : UserControl, IDialogWndOwner, ImportFromBatigest.IParent
     {
         // *** PUBLIC ****************************
 
@@ -37,6 +38,11 @@ namespace Agenda_ICS.Views.Configuration.Pages
 
                 _editDialog = null;
             }
+        }
+
+        public void OnImportChantier(long keyIdOfImportedChantier)
+        {
+            UpdateListOfChantiers(keyIdOfImportedChantier);
         }
 
         // *** RESTRICTED ************************
@@ -174,6 +180,11 @@ namespace Agenda_ICS.Views.Configuration.Pages
             }
 
             throw new System.Exception();
+        }
+
+        private void OnClick_ImporterDeBatigest(object sender, RoutedEventArgs e)
+        {
+            new ImportFromBatigest(this).Show();
         }
     }
 }

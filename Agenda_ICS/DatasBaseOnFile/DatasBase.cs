@@ -1,6 +1,7 @@
 ﻿using NDatasModel;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,15 +13,16 @@ namespace NDatasBaseOnFile
     {
         // *** PUBLIC **********************
 
-        public DatasBase(string folderPath)
+        public DatasBase(string datasFolderPath, string batigestFolderPath)
         {
-            _folderPath = folderPath;
+            _datasFolderPath = datasFolderPath;
+            _batigestFolderPath = batigestFolderPath;
 
             // A utiliser pour modifier la structure des données chantiers
             //var chantiers = ReadChantiersFromFile();
             //WriteChantiersToFile(chantiers);
 
-            if (false == File.Exists(PathToEmployeesFile) 
+            if (   false == File.Exists(PathToEmployeesFile) 
                 || false == File.Exists(PathToChantiersFile)
                 || false == File.Exists(PathToTasksFile)
                 || false == File.Exists(PathToJoursFériésFile)
@@ -246,6 +248,55 @@ namespace NDatasBaseOnFile
             return chantiers.Find(x => x.KeyId == chantierKeyId);
         }
 
+        public IChantier[] GetBatigestChantiers()
+        {
+            var con = new SqlConnection();
+            //con.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; 
+            //                AttachDbFilename = " + _batigestFolderPath + @"\BTG_DOS_ICS.mdf 
+            //                Integrated Security = True";
+            con.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; 
+                            AttachDbFilename = C:\Users\Utilisateur\Documents\ICS\ArchiveDbBatigest\BTG_DOS_ICS.mdf; 
+                            Integrated Security = True";
+            con.Open();
+
+            var output = new List<IChantier>();
+
+            using (SqlCommand command = new SqlCommand("SELECT Code, Nom, Date, Adr, CP, Ville, TotalHT FROM Devis WHERE Date > '2022-01-01'", con))
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var idDevis = reader.GetString(0);
+                    var nom = reader.GetString(1);
+                    var date = reader.GetDateTime(2);
+                    var address = reader.GetString(3);
+                    var CP = reader.GetString(4);
+                    var Ville = reader.GetString(5);
+                    var totalHT = (float)reader.GetDouble(6);
+                    //System.Console.WriteLine("{0} {1} {2} {3} {4}", idDevis, nom, date, address, totalHT);
+
+                    output.Add(
+                        new CChantier(
+                            0,
+                            nom,
+                            idDevis,
+                            address + " " + CP + " " + Ville,
+                            0,
+                            EStatutChantier.CLOS,
+                            string.Empty,
+                            string.Empty,
+                            0,
+                            0,
+                            totalHT
+                        ));
+                }
+            }
+
+            con.Close();
+
+            return output.ToArray();
+        }
+
         public IEmployee GetEmployee(long employeeKeyId)
         {
             var employees = new List<CEmployee>(ReadEmployeesFromFile());
@@ -281,15 +332,17 @@ namespace NDatasBaseOnFile
 
         private const int MaximumTimeToWait_ms = 1000;
 
-        private string _folderPath;
+        private string _datasFolderPath;
 
-        private string PathToEmployeesFile => _folderPath + @"\Employees.fic";
+        private string _batigestFolderPath;
 
-        private string PathToChantiersFile => _folderPath + @"\Chantiers.fic";
+        private string PathToEmployeesFile => _datasFolderPath + @"\Employees.fic";
 
-        private string PathToTasksFile => _folderPath + @"\Tasks.fic";
+        private string PathToChantiersFile => _datasFolderPath + @"\Chantiers.fic";
 
-        private string PathToJoursFériésFile => _folderPath + @"\JoursFériés.fic";
+        private string PathToTasksFile => _datasFolderPath + @"\Tasks.fic";
+
+        private string PathToJoursFériésFile => _datasFolderPath + @"\JoursFériés.fic";
 
         private void CreateDefaultDataSet()
         {

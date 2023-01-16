@@ -65,15 +65,6 @@ namespace Agenda_ICS
                 Width = Constantes._widthOfNameOfEmployeeLabel,
             };
 
-            //var btnPanel = new StackPanel()
-            //{
-            //    HorizontalAlignment = HorizontalAlignment.Center,
-            //    VerticalAlignment = VerticalAlignment.Center,
-            //    Orientation = Orientation.Vertical,
-            //    Height = Constantes._heightOfTimeLine + Constantes._heightOfGlobalTimeLine + Constantes._separatorUnderGlobalTimelineThickness,
-            //    Width = Constantes._widthOfNameOfEmployeeLabel,
-            //};
-
             var configurationButton = new Button()
             {
                 Content = "Configuration",
