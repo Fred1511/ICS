@@ -2,7 +2,13 @@
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Management;
+using System.Net;
 using System.Net.Http;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Speech.Recognition;
 using System.Speech.Synthesis;
 using System.Threading.Tasks;
@@ -26,23 +32,98 @@ namespace NConsole
             return data;
         }
 
-        static string ReadDatasFromWeb()
+        static string[] ReadDatasFromWeb()
         {
             client = new HttpClient();
             var result = GetGlobalDataAsync().GetAwaiter().GetResult();
 
-            return result;
+            var lines = result.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+            return lines;
         }
 
         static void Main(string[] args)
         {
+            var datas = ReadDatasFromWeb();
+            foreach(var data in datas)
+                System.Console.WriteLine("Datas from web : [" + data + "]");
 
-            //var test = new ReadDatasOnFile();
-            //test.Core();
-            ManageBddLinq();
+            //var address = GetPublicIpAddress();
+            //System.Console.WriteLine("IP address : " + address);
+
+            //GetAllHddDatas();
+            //System.Console.WriteLine("/n/n");
+
+            //System.Console.Write("Drive letter : ");
+            //var letter = System.Console.ReadLine();
+
+            //var serialNo = GetHddDatas(letter + ":");
+            //System.Console.WriteLine("Serial n° of " + letter + " : [" + serialNo + "]");
 
             System.Console.WriteLine("Press any key to exit.....");
             System.Console.ReadKey();
+        }
+
+        static string GetHddDatas(string driveLetter)
+        {
+            try
+            {
+                using (var partitions = new ManagementObjectSearcher("ASSOCIATORS OF {Win32_LogicalDisk.DeviceID='" + driveLetter +
+                                                    "'} WHERE ResultClass=Win32_DiskPartition"))
+                {
+                    foreach (var partition in partitions.Get())
+                    {
+                        using (var drives = new ManagementObjectSearcher("ASSOCIATORS OF {Win32_DiskPartition.DeviceID='" +
+                                                                partition["DeviceID"] +
+                                                                "'} WHERE ResultClass=Win32_DiskDrive"))
+                        {
+                            foreach (var drive in drives.Get())
+                            {
+                                return (string)drive["SerialNumber"];
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            return "<unknown>";
+        }
+
+        static void GetAllHddDatas()
+        {
+            var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMedia");
+
+            int i = 0;
+            foreach (ManagementObject wmi_HD in searcher.Get())
+            {
+                // get the hardware serial no.
+                if (wmi_HD["SerialNumber"] == null)
+                    System.Console.WriteLine("None");
+                else
+                    System.Console.WriteLine(wmi_HD["SerialNumber"].ToString());
+
+                ++i;
+            }
+        }
+
+        static string GetPublicIpAddress()
+        {
+            String address = "";
+            WebRequest request = WebRequest.Create("http://checkip.dyndns.org/");
+            using (WebResponse response = request.GetResponse())
+            using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+            {
+                address = stream.ReadToEnd();
+            }
+
+            int first = address.IndexOf("Address: ") + 9;
+            int last = address.LastIndexOf("</body>");
+            address = address.Substring(first, last - first);
+            address = address.Split(':')[1].Trim();
+            return address;
         }
 
         private static void TestSpeechRecogniser()
