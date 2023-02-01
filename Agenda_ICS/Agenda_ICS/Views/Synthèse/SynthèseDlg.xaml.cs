@@ -31,37 +31,27 @@ namespace Agenda_ICS.Views.Synthèse
 
         private void UpdateDisplayedDatas()
         {
-            var dateDébutPériode = DateDébutPériode.Text;
-            if (false == DatesExpert.IsDayValid(dateDébutPériode))
-            {
-                TotalPrixDeVenteHT.Content = "Date invalide";
-                TotalHeuresAPlanifier.Content = "Date invalide";
-                TotalHeuresPlanifiées.Content = "Date invalide";
-                return;
-            }
-
             var chantiers = Model.Instance.GetChantiers().OrderBy(x => x.Name).ToArray();
             var tasks = Model.Instance.GetTasks();
             var nfi = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
             nfi.NumberGroupSeparator = " ";
 
-            float totalPrixDeVenteHT = GetTotalPrixDeVenteHT(chantiers, dateDébutPériode);
+            float totalPrixDeVenteHT = GetTotalPrixDeVenteHT(chantiers);
             TotalPrixDeVenteHT.Content = string.Format("{0:N} €", totalPrixDeVenteHT);
 
-            float totalHeuresAPlanifier = GetTotalHeuresAPlanifier(chantiers, dateDébutPériode);
-            TotalHeuresAPlanifier.Content = string.Format("{0:N}", totalHeuresAPlanifier);
+            float totalHeuresAPlanifier = GetTotalHeuresAPlanifier(chantiers);
+            TotalHeuresAPlanifier.Content = string.Format("{0:N0} h", totalHeuresAPlanifier);
 
-            float totalHeuresPlanifiées = GetTotalHeuresPlanifiées(tasks, dateDébutPériode);
-            TotalHeuresPlanifiées.Content = string.Format("{0:N}", totalHeuresPlanifiées);
+            float totalHeuresPlanifiées = GetTotalHeuresPlanifiées(tasks);
+            TotalHeuresPlanifiées.Content = string.Format("{0:N0} h", totalHeuresPlanifiées);
         }
 
-        private static float GetTotalPrixDeVenteHT(NDatasModel.IChantier[] chantiers, string dateDébutPériode)
+        private static float GetTotalPrixDeVenteHT(NDatasModel.IChantier[] chantiers)
         {
             float totalPrixDeVenteHT = 0;
-            dateDébutPériode = DatesExpert.FromFrenchDateToStandardDate(dateDébutPériode);
             foreach (var chantier in chantiers)
             {
-                if (false == IsChantierInPériode(chantier, dateDébutPériode))
+                if (false == IsChantierInPériode(chantier))
                 {
                     continue;
                 }
@@ -72,13 +62,12 @@ namespace Agenda_ICS.Views.Synthèse
             return totalPrixDeVenteHT;
         }
 
-        private static int GetTotalHeuresAPlanifier(NDatasModel.IChantier[] chantiers, string dateDébutPériode)
+        private static int GetTotalHeuresAPlanifier(NDatasModel.IChantier[] chantiers)
         {
             int totalHeuresAPlanifier = 0;
-            dateDébutPériode = DatesExpert.FromFrenchDateToStandardDate(dateDébutPériode);
             foreach (var chantier in chantiers)
             {
-                if (false == IsChantierInPériode(chantier, dateDébutPériode))
+                if (false == IsChantierInPériode(chantier))
                 {
                     continue;
                 }
@@ -89,14 +78,14 @@ namespace Agenda_ICS.Views.Synthèse
             return totalHeuresAPlanifier;
         }
 
-        private static int GetTotalHeuresPlanifiées(NDatasModel.ITask[] tasks, string dateDébutPériode)
+        private static int GetTotalHeuresPlanifiées(NDatasModel.ITask[] tasks)
         {
             int totalHeuresPlanifiées = 0;
             foreach (var task in tasks)
             {
                 var chantierKeyId = task.ChantierKeyId;
                 var chantier = Model.Instance.GetChantier(chantierKeyId);
-                if (false == IsChantierInPériode(chantier, dateDébutPériode))
+                if (false == IsChantierInPériode(chantier))
                 {
                     continue;
                 }
@@ -107,15 +96,9 @@ namespace Agenda_ICS.Views.Synthèse
             return totalHeuresPlanifiées;
         }
 
-        private static bool IsChantierInPériode(NDatasModel.IChantier chantier, string dateDébutPériode)
+        private static bool IsChantierInPériode(NDatasModel.IChantier chantier)
         {
-            if (chantier.DateAcceptationDevis != string.Empty)
-            {
-                var dateAcceptationDevis = DatesExpert.FromFrenchDateToStandardDate(chantier.DateAcceptationDevis);
-                return (string.Compare(dateAcceptationDevis, dateDébutPériode) < 0);
-            }
-
-            return true;
+            return chantier.Statut != NDatasModel.EStatutChantier.CLOS;
         }
 
         private void OnCloseButton_Click(object sender, RoutedEventArgs e)
