@@ -48,10 +48,10 @@ namespace Agenda_ICS.Views.Synthèse
             float totalPrixDeVenteHT = GetTotalPrixDeVenteHT(chantiers, dateDébutPériode);
             TotalPrixDeVenteHT.Content = string.Format("{0:N} €", totalPrixDeVenteHT);
 
-            float totalHeuresAPlanifier = GetTotalHeuresAPlanifier(chantiers);
+            float totalHeuresAPlanifier = GetTotalHeuresAPlanifier(chantiers, dateDébutPériode);
             TotalHeuresAPlanifier.Content = string.Format("{0:N}", totalHeuresAPlanifier);
 
-            float totalHeuresPlanifiées = GetTotalHeuresPlanifiées(tasks);
+            float totalHeuresPlanifiées = GetTotalHeuresPlanifiées(tasks, dateDébutPériode);
             TotalHeuresPlanifiées.Content = string.Format("{0:N}", totalHeuresPlanifiées);
         }
 
@@ -61,46 +61,70 @@ namespace Agenda_ICS.Views.Synthèse
             dateDébutPériode = DatesExpert.FromFrenchDateToStandardDate(dateDébutPériode);
             foreach (var chantier in chantiers)
             {
-                if (chantier.DateAcceptationDevis != string.Empty)
+                if (false == IsChantierInPériode(chantier, dateDébutPériode))
                 {
-                    var dateAcceptationDevis = DatesExpert.FromFrenchDateToStandardDate(chantier.DateAcceptationDevis);
-                    if (string.Compare(dateAcceptationDevis, dateDébutPériode) < 0)
-                    {
-                        // ce chantier est hors période
-                        continue;
-                    }
+                    continue;
                 }
+
                 totalPrixDeVenteHT += chantier.PrixDeVenteHT;
             }
 
             return totalPrixDeVenteHT;
         }
 
-        private static int GetTotalHeuresAPlanifier(NDatasModel.IChantier[] chantiers)
+        private static int GetTotalHeuresAPlanifier(NDatasModel.IChantier[] chantiers, string dateDébutPériode)
         {
             int totalHeuresAPlanifier = 0;
+            dateDébutPériode = DatesExpert.FromFrenchDateToStandardDate(dateDébutPériode);
             foreach (var chantier in chantiers)
             {
+                if (false == IsChantierInPériode(chantier, dateDébutPériode))
+                {
+                    continue;
+                }
+
                 totalHeuresAPlanifier += chantier.NbDHeuresAPlanifier;
             }
 
             return totalHeuresAPlanifier;
         }
 
-        private static int GetTotalHeuresPlanifiées(NDatasModel.ITask[] tasks)
+        private static int GetTotalHeuresPlanifiées(NDatasModel.ITask[] tasks, string dateDébutPériode)
         {
             int totalHeuresPlanifiées = 0;
             foreach (var task in tasks)
             {
+                var chantierKeyId = task.ChantierKeyId;
+                var chantier = Model.Instance.GetChantier(chantierKeyId);
+                if (false == IsChantierInPériode(chantier, dateDébutPériode))
+                {
+                    continue;
+                }
+
                 totalHeuresPlanifiées += task.GetNbDHeures();
             }
 
             return totalHeuresPlanifiées;
         }
 
+        private static bool IsChantierInPériode(NDatasModel.IChantier chantier, string dateDébutPériode)
+        {
+            if (chantier.DateAcceptationDevis != string.Empty)
+            {
+                var dateAcceptationDevis = DatesExpert.FromFrenchDateToStandardDate(chantier.DateAcceptationDevis);
+                return (string.Compare(dateAcceptationDevis, dateDébutPériode) < 0);
+            }
+
+            return true;
+        }
+
         private void OnCloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void DateDébutPériode_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
         }
     }
 }

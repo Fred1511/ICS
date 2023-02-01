@@ -35,7 +35,7 @@
             <!--VALEUR - 2ème COLONNE-->
             <TextBox Name="DateDébutPériode" Grid.Row="0" Grid.Column="1" Text="01/01/2023" 
                    FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Height="25"
+                   Height="25" TextChanged="DateDébutPériode_TextChanged"
                    />
             <Label Name="TotalPrixDeVenteHT" Grid.Row="1" Grid.Column="1" Content="145000 €" 
                    FontSize="16" HorizontalAlignment="Left" VerticalContentAlignment="Center"

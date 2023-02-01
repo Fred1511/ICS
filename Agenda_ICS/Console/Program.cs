@@ -42,9 +42,24 @@ namespace NConsole
             return lines;
         }
 
+        static string[] ReadDatasFromWeb2()
+        {
+            client = new HttpClient();
+            var result = client.GetAsync("https://www.forsim.net/rest/api.html").Result;
+
+            if (result.IsSuccessStatusCode)
+            {
+                var data = result.Content.ReadAsStringAsync().Result;
+                var lines = data.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                return lines;
+            }
+
+            return null;
+        }
+
         static void Main(string[] args)
         {
-            var datas = ReadDatasFromWeb();
+            var datas = ReadDatasFromWeb2();
             foreach(var data in datas)
                 System.Console.WriteLine("Datas from web : [" + data + "]");
 

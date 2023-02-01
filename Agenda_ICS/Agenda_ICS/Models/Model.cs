@@ -21,6 +21,8 @@ namespace Agenda_ICS
             _db = new NDatasBaseOnFile.DatasBase(pathToDatasDirectory, pathToBatigestDirectory);
 
             InitiateTestModeIfNecessary(pathToDatasDirectory);
+
+            CheckLicence();
         }
 
         ~Model()
@@ -315,7 +317,7 @@ namespace Agenda_ICS
         {
             if (File.Exists(PathToDatas))
             {
-                var lines = File.ReadAllLines(PathToDatas);
+                var lines = NOutils.AdministrationDatasExpert.Read(PathToDatas);
                 var pathToDataDirectory = lines[0];
                 var pathToBatigestDirectory = lines[1];
 
@@ -423,6 +425,46 @@ namespace Agenda_ICS
                     _testeur = new Testeur_2();
                     break;
             }
+        }
+
+        private static bool CheckLicence()
+        {
+            var licenceCheckResult = NOutils.LicencesExpert.LicenceVerificationResult(
+                PathToDatas, 
+                out int nbJoursRestants
+                );
+
+            var codeARappeler = NOutils.DrivesExpert.ShaCodeOfDrive(PathToDatas);
+
+            switch (licenceCheckResult)
+            {
+                case NOutils.LicencesExpert.EResult.LICENCE_OK:
+                    break;
+                case NOutils.LicencesExpert.EResult.LICENCE_NOT_FOUND_BUT_OK:
+                    {
+                        var wnd = new Views.Licence(
+                            NOutils.LicencesExpert.EResult.LICENCE_NOT_FOUND_BUT_OK,
+                            $"Votre licence n'a pu être vérifiée par internet. " +
+                            $"Dans {nbJoursRestants} jours, le logiciel sera désactivé.",
+                            codeARappeler
+                            );
+                        wnd.ShowDialog();
+                        break;
+                    }
+                case NOutils.LicencesExpert.EResult.LICENCE_FAILED:
+                    {
+                        var wnd = new Views.Licence(
+                            NOutils.LicencesExpert.EResult.LICENCE_FAILED,
+                            $"Votre licence n'a pu être vérifiée par internet depuis trop longtemps. " +
+                            $"Le logiciel est désactivé.",
+                            codeARappeler
+                            );
+                        wnd.ShowDialog();
+                        return false;
+                    }
+            }
+
+            return true;
         }
     }
 }

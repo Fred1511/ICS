@@ -31,5 +31,14 @@ namespace NOutils
 
             return "<unknown>";
         }
+
+        public static string ShaCodeOfDrive(string pathToDatasFile)
+        {
+            var driveLetter = AdministrationDatasExpert.ReadLine(pathToDatasFile, 0).Substring(0, 1);
+
+            var idOfDrive = GetHddDatas(driveLetter);
+            var sha = ShaExpert.ComputeSHA256(idOfDrive);
+            return sha;
+        }
     }
 }

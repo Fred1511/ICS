@@ -1,0 +1,37 @@
+﻿<Window x:Class="Agenda_ICS.Views.Licence"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Agenda_ICS.Views"
+        mc:Ignorable="d"
+        Title="Echec du contrôle de Licence" Height="320" Width="700">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <Label Name="MainLabel" HorizontalAlignment="Center" Height="40" FontSize="24" Foreground="Red"
+                 Content="ATTENTION" FontWeight="Bold" 
+                 Width="609" HorizontalContentAlignment="Center" />
+            <TextBlock Name="Message" Height="60" FontSize="14" Foreground="Red" Padding="10" 
+                 Text="Message duk sfkfmfssd msdmsldfm sksdsdks fsmsdksmd fksmdks mfdksmdkf smdfksmfk sfmdk msdfk"
+                 FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"
+                 Width="609" HorizontalAlignment="Center" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Height="30" FontSize="14"
+                 Content="Contactez la société FORSIM :" FontWeight="Bold" />
+                <Label Height="30" FontSize="14"
+                 Content="secretariat@forsim.net" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label HorizontalAlignment="Center" Height="30" FontSize="14"
+                 Content="Code à rappeler :" FontWeight="Bold"
+                 HorizontalContentAlignment="Center" />
+                <Label Name="CodeSha" HorizontalAlignment="Center" Height="30" FontSize="14"
+                 Content="65de2d5b1f2a4fe78f2511f60ecb7072ee0090ff187a6db675a80e13df4b799a" 
+                 HorizontalContentAlignment="Center" />
+            </StackPanel>
+            <Button Content="Copier le code" Width="120" FontSize="14" Height="30" Margin="10" Click="OnClick_CopierCode"/>
+            <Button Content="Fermer" Width="120" FontSize="14" Height="30" FontWeight="Bold" Margin="30" Click="OnClick_Fermer"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

@@ -251,13 +251,34 @@ namespace NDatasBaseOnFile
         public IChantier[] GetBatigestChantiers()
         {
             var con = new SqlConnection();
-            //con.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; 
-            //                AttachDbFilename = " + _batigestFolderPath + @"\BTG_DOS_ICS.mdf 
-            //                Integrated Security = True";
-            con.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; 
-                            AttachDbFilename = C:\Users\Utilisateur\Documents\ICS\ArchiveDbBatigest\BTG_DOS_ICS.mdf; 
-                            Integrated Security = True";
-            con.Open();
+            try
+            {
+                // ConnexionString chez ICS
+                // SERVER=ICSSRV\SAGEBAT;DATABASE=BTG_DOS_ICS;USER ID=******;PASSWORD=******;
+
+                // ConnexionString chez moi 
+                // DATA SOURCE=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Utilisateur\Documents\ICS\BATIGEST_du_20230128\BTG_DOS_ICS.mdf;Integrated Security = True
+
+                con.ConnectionString = File.ReadAllText("ConnexionString.txt").Trim();
+                con.Open();
+            }
+            catch (SqlException ex)
+            {
+                string errorMessages = string.Empty;
+                for (int i = 0; i < ex.Errors.Count; i++)
+                {
+                    errorMessages += "Index #" + i + "\n" +
+                        "Message: " + ex.Errors[i].Message + "\n" +
+                        "Error Number: " + ex.Errors[i].Number + "\n" +
+                        "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
+                        "Source: " + ex.Errors[i].Source + "\n" +
+                        "Procedure: " + ex.Errors[i].Procedure + "\n";
+                }
+
+                File.WriteAllText("BatigestChantiers.log", errorMessages);
+
+                return new IChantier[0];
+            }
 
             var output = new List<IChantier>();
 
@@ -326,6 +347,69 @@ namespace NDatasBaseOnFile
             var joursFériés = new List<CJourFérié>(ReadJoursFériésFromFile());
 
             return joursFériés.ToArray();
+        }
+
+        public static CChantier ReadChantierFromFile(BinaryReader reader)
+        {
+            var keyid = reader.ReadInt64();
+            var name = reader.ReadString();
+            var refDevis = reader.ReadString();
+            var adresse = reader.ReadString();
+            var couleurId = reader.ReadInt32();
+            var statut = (EStatutChantier)(reader.ReadInt32());
+            var dateAcceptationDevis = reader.ReadString();
+            var datePrevisionnelleTravaux = reader.ReadString();
+            var nbDeTechniciens = reader.ReadInt32();
+            var nbDHeuresAPlanifier = reader.ReadInt32();
+            var prixDeVenteHT = reader.ReadSingle();
+
+            return new CChantier(
+                keyid,
+                name,
+                refDevis,
+                adresse,
+                couleurId,
+                statut,
+                dateAcceptationDevis,
+                datePrevisionnelleTravaux,
+                nbDeTechniciens,
+                nbDHeuresAPlanifier,
+                prixDeVenteHT
+                );
+        }
+
+        public static CChantier ReadChantierFromOldFile(BinaryReader reader)
+        {
+            var keyid = reader.ReadInt64();
+            var name = reader.ReadString();
+            var refDevis = reader.ReadString();
+            var adresse = reader.ReadString();
+            var couleurId = reader.ReadInt32();
+            var statut = (EStatutChantier)(reader.ReadInt32());
+
+            return new CChantier(
+                keyid,
+                name,
+                refDevis,
+                adresse,
+                couleurId,
+                statut
+                );
+        }
+
+        public static void WriteChantierToFile(BinaryWriter writer, IChantier chantier)
+        {
+            writer.Write(chantier.KeyId);
+            writer.Write(chantier.Name);
+            writer.Write(chantier.RefDevis);
+            writer.Write(chantier.Adresse);
+            writer.Write(chantier.CouleurId);
+            writer.Write((int)(chantier.Statut));
+            writer.Write(chantier.DateAcceptationDevis);
+            writer.Write(chantier.DatePrevisionnelleTravaux);
+            writer.Write(chantier.NbDeTechniciens);
+            writer.Write(chantier.NbDHeuresAPlanifier);
+            writer.Write(chantier.PrixDeVenteHT);
         }
 
         // *** RESTRICTED ******************
@@ -772,50 +856,6 @@ namespace NDatasBaseOnFile
         {
             writer.Write(employee.KeyId);
             writer.Write(employee.Name);
-        }
-
-        private CChantier ReadChantierFromFile(BinaryReader reader)
-        {
-            var keyid = reader.ReadInt64();
-            var name = reader.ReadString();
-            var refDevis = reader.ReadString();
-            var adresse = reader.ReadString();
-            var couleurId = reader.ReadInt32();
-            var statut = (EStatutChantier)(reader.ReadInt32());
-            var dateAcceptationDevis = reader.ReadString();
-            var datePrevisionnelleTravaux = reader.ReadString();
-            var nbDeTechniciens = reader.ReadInt32();
-            var nbDHeuresAPlanifier = reader.ReadInt32();
-            var prixDeVenteHT = reader.ReadSingle();
-
-            return new CChantier(
-                keyid, 
-                name, 
-                refDevis, 
-                adresse, 
-                couleurId, 
-                statut,
-                dateAcceptationDevis,
-                datePrevisionnelleTravaux,
-                nbDeTechniciens,
-                nbDHeuresAPlanifier,
-                prixDeVenteHT
-                );
-        }
-
-        private void WriteChantierToFile(BinaryWriter writer, IChantier chantier)
-        {
-            writer.Write(chantier.KeyId);
-            writer.Write(chantier.Name);
-            writer.Write(chantier.RefDevis);
-            writer.Write(chantier.Adresse);
-            writer.Write(chantier.CouleurId);
-            writer.Write((int)(chantier.Statut));
-            writer.Write(chantier.DateAcceptationDevis);
-            writer.Write(chantier.DatePrevisionnelleTravaux);
-            writer.Write(chantier.NbDeTechniciens);
-            writer.Write(chantier.NbDHeuresAPlanifier);
-            writer.Write(chantier.PrixDeVenteHT);
         }
 
         private CJourFérié ReadJourFériéFromFile(BinaryReader reader)

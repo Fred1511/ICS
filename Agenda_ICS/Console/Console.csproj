@@ -92,5 +92,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Outils\Outils.csproj">
+      <Project>{800ba03b-2c92-4698-b603-03280b318457}</Project>
+      <Name>Outils</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

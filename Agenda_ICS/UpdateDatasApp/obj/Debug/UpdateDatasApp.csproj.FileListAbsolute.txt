@@ -1,0 +1,15 @@
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\bin\Debug\UpdateDatasApp.exe.config
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\bin\Debug\UpdateDatasApp.exe
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\bin\Debug\UpdateDatasApp.pdb
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\bin\Debug\DatasBaseOnFile.dll
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\bin\Debug\DatasModel.dll
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\bin\Debug\Outils.dll
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\bin\Debug\DatasBaseOnFile.pdb
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\bin\Debug\DatasModel.pdb
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\bin\Debug\Outils.pdb
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\obj\Debug\UpdateDatasApp.csproj.AssemblyReference.cache
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\obj\Debug\UpdateDatasApp.csproj.SuggestedBindingRedirects.cache
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\obj\Debug\UpdateDatasApp.csproj.CoreCompileInputs.cache
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\obj\Debug\UpdateDatasApp.csproj.CopyComplete
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\obj\Debug\UpdateDatasApp.exe
+C:\Users\Utilisateur\Documents\ICS\Code (clone)\Agenda_ICS\UpdateDatasApp\obj\Debug\UpdateDatasApp.pdb

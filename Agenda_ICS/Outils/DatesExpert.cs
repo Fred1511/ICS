@@ -158,6 +158,14 @@ namespace NOutils
             return newDayAsString;
         }
 
+        public static string GetDayBefore(string dayAsString/*ex: 20230115 pour le 15/01/2023*/)
+        {
+            var day = GetFirstTimeOfTheDay(dayAsString);
+            var newDay = day - new TimeSpan(1, 0, 0, 0);
+            var newDayAsString = GetDayOfDateAsString(newDay);
+            return newDayAsString;
+        }
+
         public static string GetDayOfDateAsString(DateTime dateTime)
         {
             return dateTime.Year.ToString() + $"{dateTime.Month:00}" + $"{dateTime.Day:00}";

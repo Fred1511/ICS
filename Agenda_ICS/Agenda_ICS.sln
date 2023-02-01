@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatasBaseOnFile", "DatasBas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outils", "Outils\Outils.csproj", "{800BA03B-2C92-4698-B603-03280B318457}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateDatasApp", "UpdateDatasApp\UpdateDatasApp.csproj", "{23656D85-8B80-45FF-A4D2-B139FA2ABC1E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{800BA03B-2C92-4698-B603-03280B318457}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{800BA03B-2C92-4698-B603-03280B318457}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{800BA03B-2C92-4698-B603-03280B318457}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23656D85-8B80-45FF-A4D2-B139FA2ABC1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23656D85-8B80-45FF-A4D2-B139FA2ABC1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23656D85-8B80-45FF-A4D2-B139FA2ABC1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23656D85-8B80-45FF-A4D2-B139FA2ABC1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

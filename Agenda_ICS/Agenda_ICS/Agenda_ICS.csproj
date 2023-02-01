@@ -152,6 +152,9 @@
     <Compile Include="Views\EditorDialogs\TaskEditorDialog.xaml.cs">
       <DependentUpon>TaskEditorDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Licence.xaml.cs">
+      <DependentUpon>Licence.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Synthèse\SynthèseDlg.xaml.cs">
       <DependentUpon>SynthèseDlg.xaml</DependentUpon>
     </Compile>
@@ -194,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditorDialogs\TaskEditorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Licence.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

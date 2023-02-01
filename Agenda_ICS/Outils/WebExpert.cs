@@ -9,7 +9,7 @@ namespace NOutils
     {
         // *** PUBLIC ***************************
 
-        static public Licence[] ReadLicencesFromWeb()
+        public static Licence[] ReadLicencesFromWeb_Asynchrone()
         {
             client = new HttpClient();
             var result = GetGlobalDataAsync().GetAwaiter().GetResult();
@@ -26,11 +26,43 @@ namespace NOutils
             return output.ToArray();
         }
 
+        public static Licence[] ReadLicencesFromWeb_Synchrone()
+        {
+            client = new HttpClient();
+            try
+            {
+                var result = client.GetAsync("https://www.forsim.net/rest/api.html").Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var data = result.Content.ReadAsStringAsync().Result;
+                    var lines = data.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+                    var output = new List<Licence>();
+                    foreach (var line in lines)
+                    {
+                        var components = line.Split('=');
+                        var licence = new Licence(components[0], components[1]);
+                        output.Add(licence);
+                    }
+
+                    return output.ToArray();
+                }
+            }
+            catch
+            {
+
+            }
+
+            return null;
+        }
+
+
         // *** RESTRICTED ***********************
 
-        static HttpClient client;
+        private static HttpClient client;
 
-        static async Task<string> GetGlobalDataAsync()
+        private static async Task<string> GetGlobalDataAsync()
         {
             var data = string.Empty;
             var response = await client.GetAsync("https://www.forsim.net/rest/api.html");
@@ -42,6 +74,5 @@ namespace NOutils
 
             return data;
         }
-
     }
 }

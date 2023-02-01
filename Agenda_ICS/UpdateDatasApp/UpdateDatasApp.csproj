@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{800BA03B-2C92-4698-B603-03280B318457}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NOutils</RootNamespace>
-    <AssemblyName>Outils</AssemblyName>
+    <ProjectGuid>{23656D85-8B80-45FF-A4D2-B139FA2ABC1E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>UpdateDatasApp</RootNamespace>
+    <AssemblyName>UpdateDatasApp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,14 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdministrationDatasExpert.cs" />
-    <Compile Include="CJoursOuvrablesSuccessifs.cs" />
-    <Compile Include="DatesExpert.cs" />
-    <Compile Include="DrivesExpert.cs" />
-    <Compile Include="LicencesExpert.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShaExpert.cs" />
-    <Compile Include="WebExpert.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatasBaseOnFile\DatasBaseOnFile.csproj">
+      <Project>{53e80c13-66d7-4111-bfd1-c49410f0830e}</Project>
+      <Name>DatasBaseOnFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatasModel\DatasModel.csproj">
+      <Project>{8A3DC83A-5604-4042-8982-69DE97D2FF8C}</Project>
+      <Name>DatasModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
