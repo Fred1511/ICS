@@ -18,9 +18,9 @@
 
         string DatePrevisionnelleTravaux { get; }
 
-        int NbDeTechniciens { get; }
+        int NbDHeuresADeuxTechniciens { get; }
 
-        int NbDHeuresAPlanifier { get; }
+        int NbDHeuresAUnTechnicien { get; }
 
         float PrixDeVenteHT { get; }
     }

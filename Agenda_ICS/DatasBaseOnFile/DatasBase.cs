@@ -84,8 +84,8 @@ namespace NDatasBaseOnFile
             EStatutChantier statut,
             string dateAcceptationDevis,
             string datePrevisionnelleTravaux,
-            int nbDeTechniciens,
-            int nbDHeuresAPlanifier,
+            int nbDHeuresADeuxTechniciens,
+            int nbDHeuresAUnTechnicien,
             float prixDeVenteHT
             )
         {
@@ -100,8 +100,8 @@ namespace NDatasBaseOnFile
                 statut,
                 dateAcceptationDevis,
                 datePrevisionnelleTravaux,
-                nbDeTechniciens,
-                nbDHeuresAPlanifier,
+                nbDHeuresADeuxTechniciens,
+                nbDHeuresAUnTechnicien,
                 prixDeVenteHT
                 );
             chantiers.Add(newChantier);
@@ -131,8 +131,8 @@ namespace NDatasBaseOnFile
             EStatutChantier statut,
             string dateAcceptationDevis,
             string datePrevisionnelleTravaux,
-            int nbDeTechniciens,
-            int nbDHeuresAPlanifier,
+            int nbDHeuresADeuxTechniciens,
+            int nbDHeuresAUnTechnicien,
             float prixDeVenteHT
             )
         {
@@ -151,8 +151,8 @@ namespace NDatasBaseOnFile
             chantierToModify._statut = statut;
             chantierToModify._dateAcceptationDevis = dateAcceptationDevis;
             chantierToModify._datePrevisionnelleTravaux = datePrevisionnelleTravaux;
-            chantierToModify._nbDeTechniciens = nbDeTechniciens;
-            chantierToModify._nbDHeuresAPlanifier = nbDHeuresAPlanifier;
+            chantierToModify._nbDHeuresADeuxTechniciens = nbDHeuresADeuxTechniciens;
+            chantierToModify._nbDHeuresAUnTechnicien = nbDHeuresAUnTechnicien;
             chantierToModify._prixDeVenteHT = prixDeVenteHT;
 
             WriteChantiersToFile(chantiers.ToArray());
@@ -237,9 +237,16 @@ namespace NDatasBaseOnFile
             return tasks.Find(x => x.KeyId == keyId);
         }
 
-        public ITask[] GetTasks()
+        public ITask[] GetTasks(long chantierKeyId = long.MinValue)
         {
-            return ReadTasksFromFile();
+            var allTasks = ReadTasksFromFile();
+            if (chantierKeyId == long.MinValue)
+            {
+                return allTasks;
+            }
+
+            var tasks = allTasks.Where(x => x.ChantierKeyId == chantierKeyId);
+            return tasks.ToArray();
         }
 
         public IChantier GetChantier(long chantierKeyId)
@@ -359,8 +366,8 @@ namespace NDatasBaseOnFile
             var statut = (EStatutChantier)(reader.ReadInt32());
             var dateAcceptationDevis = reader.ReadString();
             var datePrevisionnelleTravaux = reader.ReadString();
-            var nbDeTechniciens = reader.ReadInt32();
-            var nbDHeuresAPlanifier = reader.ReadInt32();
+            var nbDHeuresADeuxTechniciens = reader.ReadInt32();
+            var nbDHeuresAUnTechnicien = reader.ReadInt32();
             var prixDeVenteHT = reader.ReadSingle();
 
             return new CChantier(
@@ -372,8 +379,8 @@ namespace NDatasBaseOnFile
                 statut,
                 dateAcceptationDevis,
                 datePrevisionnelleTravaux,
-                nbDeTechniciens,
-                nbDHeuresAPlanifier,
+                nbDHeuresADeuxTechniciens,
+                nbDHeuresAUnTechnicien,
                 prixDeVenteHT
                 );
         }
@@ -407,8 +414,8 @@ namespace NDatasBaseOnFile
             writer.Write((int)(chantier.Statut));
             writer.Write(chantier.DateAcceptationDevis);
             writer.Write(chantier.DatePrevisionnelleTravaux);
-            writer.Write(chantier.NbDeTechniciens);
-            writer.Write(chantier.NbDHeuresAPlanifier);
+            writer.Write(chantier.NbDHeuresADeuxTechniciens);
+            writer.Write(chantier.NbDHeuresAUnTechnicien);
             writer.Write(chantier.PrixDeVenteHT);
         }
 

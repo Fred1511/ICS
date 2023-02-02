@@ -30,8 +30,8 @@ namespace Agenda_ICS.Views.Editors
                 chantier.Statut,
                 chantier.DateAcceptationDevis,
                 chantier.DatePrevisionnelleTravaux,
-                chantier.NbDeTechniciens,
-                chantier.NbDHeuresAPlanifier,
+                chantier.NbDHeuresADeuxTechniciens,
+                chantier.NbDHeuresAUnTechnicien,
                 chantier.PrixDeVenteHT
                 );
             _mode = EMode.MODIFICATION;
@@ -80,8 +80,8 @@ namespace Agenda_ICS.Views.Editors
             RefDevis.Text = _chantier.RefDevis;
             DateAcceptationDevis.Text= _chantier.DateAcceptationDevis;
             DatePrevisionnelleTravaux.Text = _chantier.DatePrevisionnelleTravaux;
-            NombreTechniciens.Text = _chantier.NbDeTechniciens > 0 ? _chantier.NbDeTechniciens.ToString() : string.Empty;
-            NombreHeuresAPlanifier.Text = _chantier.NbDHeuresAPlanifier > 0 ? _chantier.NbDHeuresAPlanifier.ToString() : string.Empty;
+            NbDHeuresADeuxTechniciens.Text = _chantier.NbDHeuresADeuxTechniciens > 0 ? _chantier.NbDHeuresADeuxTechniciens.ToString() : string.Empty;
+            NbDHeuresAUnTechnicien.Text = _chantier.NbDHeuresAUnTechnicien > 0 ? _chantier.NbDHeuresAUnTechnicien.ToString() : string.Empty;
             PrixDeVenteHT.Text = _chantier.PrixDeVenteHT != 0 ? $"{_chantier.PrixDeVenteHT:0.00}" : string.Empty;
 
             UpdateSelectedColor(_chantier.CouleurId);
@@ -152,11 +152,11 @@ namespace Agenda_ICS.Views.Editors
             _chantier._dateAcceptationDevis = DateAcceptationDevis.Text;
             _chantier._datePrevisionnelleTravaux = DatePrevisionnelleTravaux.Text;
 
-            if (false == int.TryParse(NombreTechniciens.Text.Trim(), out int nbDeTechniciens))
+            if (false == int.TryParse(NbDHeuresADeuxTechniciens.Text.Trim(), out int nbDHeuresADeuxTechniciens))
             {
-                if (NombreTechniciens.Text == string.Empty)
+                if (NbDHeuresADeuxTechniciens.Text == string.Empty)
                 {
-                    nbDeTechniciens = 0;
+                    nbDHeuresADeuxTechniciens = 0;
                 }
                 else
                 {
@@ -164,18 +164,18 @@ namespace Agenda_ICS.Views.Editors
                     return;
                 }
             }
-            if (nbDeTechniciens < 0)
+            if (nbDHeuresADeuxTechniciens < 0)
             {
                 MessageBox.Show("Le nombre de techniciens doit être un nombre entier POSITIF", "Merci de corriger ...", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            _chantier._nbDeTechniciens = nbDeTechniciens;
+            _chantier._nbDHeuresADeuxTechniciens = nbDHeuresADeuxTechniciens;
 
-            if (false == int.TryParse(NombreHeuresAPlanifier.Text.Trim(), out int nbDHeuresAPlanifier))
+            if (false == int.TryParse(NbDHeuresAUnTechnicien.Text.Trim(), out int nbDHeuresAUnTechnicien))
             {
-                if (NombreHeuresAPlanifier.Text == string.Empty)
+                if (NbDHeuresAUnTechnicien.Text == string.Empty)
                 {
-                    nbDHeuresAPlanifier = 0;
+                    nbDHeuresAUnTechnicien = 0;
                 }
                 else
                 {
@@ -183,12 +183,12 @@ namespace Agenda_ICS.Views.Editors
                     return;
                 }
             }
-            if (nbDHeuresAPlanifier < 0)
+            if (nbDHeuresAUnTechnicien < 0)
             {
                 MessageBox.Show("Le nombre d'heures à planifier doit être un nombre entier POSITIF", "Merci de corriger ...", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            _chantier._nbDHeuresAPlanifier = nbDHeuresAPlanifier;
+            _chantier._nbDHeuresAUnTechnicien = nbDHeuresAUnTechnicien;
 
             if (false == float.TryParse(PrixDeVenteHT.Text.Trim().Replace('.', ','), out float prixDeVenteHT))
             {
@@ -215,8 +215,8 @@ namespace Agenda_ICS.Views.Editors
                     _chantier.Statut,
                     _chantier.DateAcceptationDevis,
                     _chantier.DatePrevisionnelleTravaux,
-                    _chantier.NbDeTechniciens,
-                    _chantier.NbDHeuresAPlanifier,
+                    _chantier.NbDHeuresADeuxTechniciens,
+                    _chantier.NbDHeuresAUnTechnicien,
                     _chantier.PrixDeVenteHT
                     );
             }
@@ -230,8 +230,8 @@ namespace Agenda_ICS.Views.Editors
                     _chantier.Statut,
                     _chantier.DateAcceptationDevis,
                     _chantier.DatePrevisionnelleTravaux,
-                    _chantier.NbDeTechniciens,
-                    _chantier.NbDHeuresAPlanifier,
+                    _chantier.NbDHeuresADeuxTechniciens,
+                    _chantier.NbDHeuresAUnTechnicien,
                     _chantier.PrixDeVenteHT
                     );
             }

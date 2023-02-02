@@ -18,8 +18,8 @@ namespace NDatasModel
             EStatutChantier statut,
             string dateAcceptationDevis,
             string datePrevisionnelleTravaux,
-            int nbDeTechniciens,
-            int nbDHeuresAPlanifier,
+            int nbDHeuresADeuxTechniciens,
+            int nbDHeuresAUnTechnicien,
             float prixDeVenteHT
             );
 
@@ -34,8 +34,8 @@ namespace NDatasModel
             EStatutChantier statut,
             string dateAcceptationDevis,
             string datePrevisionnelleTravaux,
-            int nbDeTechniciens,
-            int nbDHeuresAPlanifier,
+            int nbDHeuresADeuxTechniciens,
+            int nbDHeuresAUnTechnicien,
             float prixDeVenteHT
             );
 
@@ -49,7 +49,7 @@ namespace NDatasModel
 
         ITask GetTask(long keyId);
 
-        ITask[] GetTasks();
+        ITask[] GetTasks(long chantierKeyId = long.MinValue);
 
         long AddTaskToEmployee(long employeeKeyId, long chantierKeyId, DateTime beginsAt, DateTime endsAt);
 

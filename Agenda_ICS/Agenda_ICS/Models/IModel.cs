@@ -19,8 +19,8 @@ namespace Agenda_ICS
             EStatutChantier statut,
             string dateAcceptationDevis,
             string datePrevisionnelleTravaux,
-            int nbDeTechniciens,
-            int nbDHeuresAPlanifier,
+            int nbDHeuresADeuxTechniciens,
+            int nbDHeuresAUnTechnicien,
             float prixDeVenteHT
             );
 
@@ -35,8 +35,8 @@ namespace Agenda_ICS
             EStatutChantier statut,
             string dateAcceptationDevis,
             string datePrevisionnelleTravaux,
-            int nbDeTechniciens,
-            int nbDHeuresAPlanifier,
+            int nbDHeuresADeuxTechniciens,
+            int nbDHeuresAUnTechnicien,
             float prixDeVenteHT
             );
 
@@ -72,7 +72,7 @@ namespace Agenda_ICS
 
         ITask GetTask(long taskKeyId);
 
-        ITask[] GetTasks();
+        ITask[] GetTasks(long chantierKeyId = long.MinValue);
 
         void OnTimer_100ms();
 

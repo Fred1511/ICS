@@ -46,12 +46,15 @@
         <TextBox Name="DatePrevisionnelleTravaux" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,3,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100"/>
 
         <!--Ligne 6-->
-        <Label Content="Nb de techniciens :" Grid.Row="5" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="NombreTechniciens" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,3,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="50"/>
+        <Label Content="Nb d'heures à 2 techniciens :" Grid.Row="5" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Top"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" >
+            <TextBox Name="NbDHeuresADeuxTechniciens" HorizontalAlignment="Left" Height="23" Margin="10,3,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="50"/>
+            <Label Content="(ex : pour 4 h à 2 techniciens, 8 h seront comptabilisées)" FontStyle="Italic" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+        </StackPanel>
 
         <!--Ligne 7-->
-        <Label Content="Nb d'heures à planifier :" Grid.Row="6" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="NombreHeuresAPlanifier" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,3,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="50"/>
+        <Label Content="Nb d'heures à 1 technicien :" Grid.Row="6" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="NbDHeuresAUnTechnicien" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,3,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="50"/>
 
         <!--Ligne 8-->
         <Label Content="Prix de vente HT :" Grid.Row="7" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Top"/>

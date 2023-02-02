@@ -78,8 +78,8 @@ namespace NDatasBaseSQL
             EStatutChantier statut,
             string dateAcceptationDevis,
             string datePrevisionnelleTravaux,
-            int nbDeTechniciens,
-            int nbDHeuresAPlanifier,
+            int nbDHeuresADeuxTechniciens,
+            int nbDHeuresAUnTechnicien,
             float prixDeVenteHT
             )
         {
@@ -87,9 +87,9 @@ namespace NDatasBaseSQL
             {
                 command.CommandText = 
                     $"INSERT INTO Chantiers (nom, refDevis, adresse, couleurId, statut, " 
-                    + "dateAcceptationDevis, datePrevisionnelleTravaux, nbDeTechniciens, nbDHeuresAPlanifier, prixDeVenteHT)"
+                    + "dateAcceptationDevis, datePrevisionnelleTravaux, nbDHeuresADeuxTechniciens, nbDHeuresAUnTechnicien, prixDeVenteHT)"
                     + " VALUES (@nom, @refDevis, @adresse, @couleurId, @statut, @dateAcceptationDevis, @datePrevisionnelleTravaux, "
-                    + "@nbDeTechniciens, @nbDHeuresAPlanifier, @prixDeVenteHT)"
+                    + "@nbDHeuresADeuxTechniciens, @nbDHeuresAUnTechnicien, @prixDeVenteHT)"
                     + ";SELECT SCOPE_IDENTITY()";
                 command.Parameters.AddWithValue("@nom", chantierName);
                 command.Parameters.AddWithValue("@refDevis", refDevis);
@@ -98,8 +98,8 @@ namespace NDatasBaseSQL
                 command.Parameters.AddWithValue("@statut", (int)statut);
                 command.Parameters.AddWithValue("@dateAcceptationDevis", dateAcceptationDevis);
                 command.Parameters.AddWithValue("@datePrevisionnelleTravaux", datePrevisionnelleTravaux);
-                command.Parameters.AddWithValue("@nbDeTechniciens", nbDeTechniciens);
-                command.Parameters.AddWithValue("@nbDHeuresAPlanifier", nbDHeuresAPlanifier);
+                command.Parameters.AddWithValue("@nbDHeuresADeuxTechniciens", nbDHeuresADeuxTechniciens);
+                command.Parameters.AddWithValue("@nbDHeuresAUnTechnicien", nbDHeuresAUnTechnicien);
                 command.Parameters.AddWithValue("@prixDeVenteHT", prixDeVenteHT);
 
                 var lastId = Convert.ToInt32(command.ExecuteScalar());
@@ -126,8 +126,8 @@ namespace NDatasBaseSQL
             EStatutChantier statut,
             string dateAcceptationDevis,
             string datePrevisionnelleTravaux,
-            int nbDeTechniciens,
-            int nbDHeuresAPlanifier,
+            int nbDHeuresADeuxTechniciens,
+            int nbDHeuresAUnTechnicien,
             float prixDeVenteHT
             )
         {
@@ -143,8 +143,8 @@ namespace NDatasBaseSQL
                 command.Parameters.AddWithValue("@statut", (int)statut);
                 command.Parameters.AddWithValue("@adresse", dateAcceptationDevis);
                 command.Parameters.AddWithValue("@adresse", datePrevisionnelleTravaux);
-                command.Parameters.AddWithValue("@adresse", nbDeTechniciens);
-                command.Parameters.AddWithValue("@adresse", nbDHeuresAPlanifier);
+                command.Parameters.AddWithValue("@adresse", nbDHeuresADeuxTechniciens);
+                command.Parameters.AddWithValue("@adresse", nbDHeuresAUnTechnicien);
                 command.Parameters.AddWithValue("@adresse", prixDeVenteHT);
 
                 var nbLignesAffectées = command.ExecuteNonQuery();
@@ -306,7 +306,7 @@ namespace NDatasBaseSQL
             return joursFériés.ToArray();
         }
 
-        public ITask[] GetTasks()
+        public ITask[] GetTasks(long chantierKeyId = long.MinValue)
         {
             throw new NotImplementedException();
         }
@@ -519,8 +519,8 @@ namespace NDatasBaseSQL
             var statut = (EStatutChantier)(reader.GetInt32(5));
             var dateAcceptationDevis = reader.GetString(6);
             var datePrevisionnelleTravaux = reader.GetString(7);
-            var nbDeTechniciens = reader.GetInt32(8);
-            var nbDHeuresAPlanifier = reader.GetInt32(9);
+            var nbDHeuresADeuxTechniciens = reader.GetInt32(8);
+            var nbDHeuresAUnTechnicien = reader.GetInt32(9);
             var prixDeVenteHT = (float)reader.GetDouble(10);
 
             return new CChantier(
@@ -532,8 +532,8 @@ namespace NDatasBaseSQL
                 statut,
                 dateAcceptationDevis,
                 datePrevisionnelleTravaux,
-                nbDeTechniciens,
-                nbDHeuresAPlanifier,
+                nbDHeuresADeuxTechniciens,
+                nbDHeuresAUnTechnicien,
                 prixDeVenteHT
                 );
         }

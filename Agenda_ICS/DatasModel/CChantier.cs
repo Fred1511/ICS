@@ -29,9 +29,9 @@ namespace NDatasModel
 
         public string DatePrevisionnelleTravaux => _datePrevisionnelleTravaux;
 
-        public int NbDeTechniciens => _nbDeTechniciens;
+        public int NbDHeuresADeuxTechniciens => _nbDHeuresADeuxTechniciens;
 
-        public int NbDHeuresAPlanifier => _nbDHeuresAPlanifier;
+        public int NbDHeuresAUnTechnicien => _nbDHeuresAUnTechnicien;
 
         public float PrixDeVenteHT => _prixDeVenteHT;
 
@@ -53,9 +53,9 @@ namespace NDatasModel
 
         public string _datePrevisionnelleTravaux;
 
-        public int _nbDeTechniciens;
+        public int _nbDHeuresADeuxTechniciens;
 
-        public int _nbDHeuresAPlanifier;
+        public int _nbDHeuresAUnTechnicien;
 
         public float _prixDeVenteHT;
 
@@ -68,8 +68,8 @@ namespace NDatasModel
             EStatutChantier statut,
             string dateAcceptationDevis = "",
             string datePrevisionnelleTravaux = "",
-            int nbDeTechniciens = 0,
-            int nbDHeuresAPlanifier = 0,
+            int nbDHeuresADeuxTechniciens = 0,
+            int nbDHeuresAUnTechnicien = 0,
             float prixDeVenteHT = 0
             )
         {
@@ -81,8 +81,8 @@ namespace NDatasModel
             _statut = statut;
             _dateAcceptationDevis = dateAcceptationDevis ?? throw new ArgumentNullException(nameof(dateAcceptationDevis));
             _datePrevisionnelleTravaux = datePrevisionnelleTravaux ?? throw new ArgumentNullException(nameof(dateAcceptationDevis));
-            _nbDeTechniciens = nbDeTechniciens;
-            _nbDHeuresAPlanifier = nbDHeuresAPlanifier;
+            _nbDHeuresADeuxTechniciens = nbDHeuresADeuxTechniciens;
+            _nbDHeuresAUnTechnicien = nbDHeuresAUnTechnicien;
             _prixDeVenteHT = prixDeVenteHT;
         }
 

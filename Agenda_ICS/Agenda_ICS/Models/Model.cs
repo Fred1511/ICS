@@ -54,8 +54,8 @@ namespace Agenda_ICS
             EStatutChantier statut,
             string dateAcceptationDevis,
             string datePrevisionnelleTravaux,
-            int nbDeTechniciens,
-            int nbDHeuresAPlanifier,
+            int nbDHeuresADeuxTechniciens,
+            int nbDHeuresAUnTechnicien,
             float prixDeVenteHT
             )
         {
@@ -67,8 +67,8 @@ namespace Agenda_ICS
                 statut,
                 dateAcceptationDevis,
                 datePrevisionnelleTravaux,
-                nbDeTechniciens,
-                nbDHeuresAPlanifier,
+                nbDHeuresADeuxTechniciens,
+                nbDHeuresAUnTechnicien,
                 prixDeVenteHT
                 );
         }
@@ -87,8 +87,8 @@ namespace Agenda_ICS
             EStatutChantier statut,
             string dateAcceptationDevis,
             string datePrevisionnelleTravaux,
-            int nbDeTechniciens,
-            int nbDHeuresAPlanifier,
+            int nbDHeuresADeuxTechniciens,
+            int nbDHeuresAUnTechnicien,
             float prixDeVenteHT
             )
         {
@@ -101,8 +101,8 @@ namespace Agenda_ICS
                 statut,
                 dateAcceptationDevis,
                 datePrevisionnelleTravaux,
-                nbDeTechniciens,
-                nbDHeuresAPlanifier,
+                nbDHeuresADeuxTechniciens,
+                nbDHeuresAUnTechnicien,
                 prixDeVenteHT
                 );
         }
@@ -255,7 +255,7 @@ namespace Agenda_ICS
             return _db.GetTask(taskKeyId);
         }
 
-        public ITask[] GetTasks()
+        public ITask[] GetTasks(long chantierKeyId = long.MinValue)
         {
             return _db.GetTasks();
         }

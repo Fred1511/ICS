@@ -72,7 +72,11 @@ namespace Agenda_ICS.Views.Synthèse
                     continue;
                 }
 
-                totalHeuresAPlanifier += chantier.NbDHeuresAPlanifier;
+                var nbHeuresPlanifiées = GetNbHeuresPlanifiéesParChantier(chantier);
+                var nbHeuresAPlanifier = chantier.NbDHeuresAUnTechnicien + 2 * chantier.NbDHeuresADeuxTechniciens;
+                var delta_h = nbHeuresAPlanifier - nbHeuresPlanifiées;
+                // s'il y a + d'heures planifiées que prévues, on ne comptabilise pas en négatif
+                totalHeuresAPlanifier += delta_h > 0 ? delta_h : 0;
             }
 
             return totalHeuresAPlanifier;
@@ -96,6 +100,18 @@ namespace Agenda_ICS.Views.Synthèse
             return totalHeuresPlanifiées;
         }
 
+        private static int GetNbHeuresPlanifiéesParChantier(NDatasModel.IChantier chantier)
+        {
+            int nbHeures = 0;
+            var tasks = Model.Instance.GetTasks(chantier.KeyId);
+            foreach(var task in tasks)
+            {
+                nbHeures += task.GetNbDHeures();
+            }
+
+            return nbHeures;
+        }
+
         private static bool IsChantierInPériode(NDatasModel.IChantier chantier)
         {
             return chantier.Statut != NDatasModel.EStatutChantier.CLOS;
@@ -104,10 +120,6 @@ namespace Agenda_ICS.Views.Synthèse
         private void OnCloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void DateDébutPériode_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
         }
     }
 }
