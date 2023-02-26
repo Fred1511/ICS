@@ -257,7 +257,7 @@ namespace Agenda_ICS
 
         public ITask[] GetTasks(long chantierKeyId = long.MinValue)
         {
-            return _db.GetTasks();
+            return _db.GetTasks(chantierKeyId);
         }
 
         public void AddJourFérié(DateTime jour)

@@ -51,7 +51,7 @@ namespace Agenda_ICS.Views.Synthèse
             float totalPrixDeVenteHT = 0;
             foreach (var chantier in chantiers)
             {
-                if (false == IsChantierInPériode(chantier))
+                if (false == IsChantierNonClos(chantier))
                 {
                     continue;
                 }
@@ -67,7 +67,12 @@ namespace Agenda_ICS.Views.Synthèse
             int totalHeuresAPlanifier = 0;
             foreach (var chantier in chantiers)
             {
-                if (false == IsChantierInPériode(chantier))
+                if (chantier.Name.StartsWith("Test"))
+                {
+                    bool t = true;
+                }
+
+                if (false == IsChantierNonClos(chantier))
                 {
                     continue;
                 }
@@ -89,7 +94,7 @@ namespace Agenda_ICS.Views.Synthèse
             {
                 var chantierKeyId = task.ChantierKeyId;
                 var chantier = Model.Instance.GetChantier(chantierKeyId);
-                if (false == IsChantierInPériode(chantier))
+                if (false == IsChantierNonClos(chantier))
                 {
                     continue;
                 }
@@ -112,7 +117,7 @@ namespace Agenda_ICS.Views.Synthèse
             return nbHeures;
         }
 
-        private static bool IsChantierInPériode(NDatasModel.IChantier chantier)
+        private static bool IsChantierNonClos(NDatasModel.IChantier chantier)
         {
             return chantier.Statut != NDatasModel.EStatutChantier.CLOS;
         }
